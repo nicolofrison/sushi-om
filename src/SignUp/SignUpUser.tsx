@@ -1,9 +1,14 @@
 import React from 'react';
+
+import { useTranslation } from 'react-i18next';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+
+import translations from '../Utils/TranslationKeys';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -27,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUpUser() {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -43,7 +49,7 @@ export default function SignUpUser() {
               required
               fullWidth
               id="firstName"
-              label="First Name"
+              label={t(translations.firstName)}
               autoFocus
             />
           </Grid>
@@ -53,7 +59,7 @@ export default function SignUpUser() {
               required
               fullWidth
               id="lastName"
-              label="Last Name"
+              label={t(translations.lastName)}
               name="lastName"
               autoComplete="lname"
             />
@@ -65,7 +71,7 @@ export default function SignUpUser() {
               id="username"
               label="Username"
               name="username"
-              autoComplete="username"
+              autoComplete={t(translations.username)}
             />
           </Grid>
         </Grid>
@@ -76,7 +82,7 @@ export default function SignUpUser() {
           color="primary"
           className={classes.submit}
         >
-          Sign Up
+          {t(translations.continue)}
         </Button>
       </form>
     </div>

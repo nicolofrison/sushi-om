@@ -1,0 +1,10 @@
+{
+    "firstName": "nome",
+    "lastName": "cognome",
+    "username": "username",
+    "createGroup": "crea gruppo",
+    "joinGroup": "unisciti al gruppo",
+    "groupName": "nome gruppo",
+    "groupPassword": "password gruppo",
+    "continue": "continua"
+}

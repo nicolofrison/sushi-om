@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
 
-  let step = 'user'; // 'user' : 'group'
+  let step = 'group'; // 'user' : 'group'
 
   return (
     <Container component="main" maxWidth="xs">

@@ -1,10 +1,15 @@
 import React from 'react';
+
+import {withTranslation, WithTranslation} from "react-i18next";
+
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+
+import translations from '../Utils/TranslationKeys';
 
 const styles = (theme: any) => createStyles({
   paper: {
@@ -31,7 +36,7 @@ enum FormType {
   join
 }
 
-interface IProps extends WithStyles<typeof styles> {}
+interface IProps extends WithStyles<typeof styles>, WithTranslation {}
 
 interface IState {
   formType: FormType,
@@ -73,7 +78,7 @@ class SignUpGroup extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { classes } = this.props;
+    const { t, classes } = this.props;
     return (
       <div>
         <Typography component="h1" variant="h5">
@@ -82,12 +87,6 @@ class SignUpGroup extends React.Component<IProps, IState> {
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                <Button color={this.state.formType === FormType.create ? "primary" : "default"} onClick={this.handleFormType.bind(this, FormType.create)}>Create new group</Button>
-                <Button color={this.state.formType === FormType.join ? "primary" : "default"} onClick={this.handleFormType.bind(this, FormType.join)}>Join group</Button>
-              </ButtonGroup>
-            </Grid>
-            <Grid item xs={12}>
               <TextField
                 autoComplete="gname"
                 name="groupName"
@@ -95,7 +94,7 @@ class SignUpGroup extends React.Component<IProps, IState> {
                 required
                 fullWidth
                 id="groupName"
-                label="Group Name"
+                label={t(translations.groupName)}
                 autoFocus
               />
             </Grid>
@@ -105,26 +104,24 @@ class SignUpGroup extends React.Component<IProps, IState> {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label={t(translations.groupPassword)}
                 type="password"
                 id="password"
                 autoComplete="current-password"
               />
             </Grid>
+            <Grid item xs={6}>
+              <Button type="submit" size="large" variant="contained" color="primary" onClick={this.handleFormType.bind(this, FormType.create)} className={classes.submit}>{t(translations.createGroup)}</Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button type="submit" size="large" variant="contained" color="primary" onClick={this.handleFormType.bind(this, FormType.join)} className={classes.submit}>{t(translations.joinGroup)}</Button>
+            </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            {this.state.formType === FormType.create ? "Create group" : "Join group"}
-          </Button>
         </form>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(SignUpGroup);
+const translatedSignUpGroup = withTranslation('')(SignUpGroup);
+export default withStyles(styles)(translatedSignUpGroup);
