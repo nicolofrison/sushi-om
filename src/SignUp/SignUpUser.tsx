@@ -13,9 +13,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-import SignUpUser from './SignUpUser';
-import SignUpGroup from './SignUpGroup';
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -49,27 +46,60 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUpUser() {
   const classes = useStyles();
 
-  let step = 'user'; // 'user' : 'group'
-
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        {step === 'user' ?
-          <SignUpUser />
-        :
-          <SignUpGroup />
-        }
-      </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-    </Container>
+    <div>
+      <Typography component="h1" variant="h5">
+        Sign up - user info
+      </Typography>
+      <form className={classes.form} noValidate>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              autoComplete="fname"
+              name="firstName"
+              variant="outlined"
+              required
+              fullWidth
+              id="firstName"
+              label="First Name"
+              autoFocus
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              id="lastName"
+              label="Last Name"
+              name="lastName"
+              autoComplete="lname"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+            />
+          </Grid>
+        </Grid>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+        >
+          Sign Up
+        </Button>
+      </form>
+    </div>
   );
 }
