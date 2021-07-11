@@ -6,5 +6,11 @@ export default {
     joinGroup: "joinGroup",
     groupName: "groupName",
     groupPassword: "groupPassword",
-    continue: "continue"
+    continue: "continue",
+    code: "code",
+    amount: "amount",
+    users: "users",
+    actions: "actions",
+    remove: "remove",
+    add: "add"
 };

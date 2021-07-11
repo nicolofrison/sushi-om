@@ -3,7 +3,6 @@ import React from 'react';
 import {withTranslation, WithTranslation} from "react-i18next";
 
 import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -77,6 +76,10 @@ class SignUpGroup extends React.Component<IProps, IState> {
     });
   }
 
+  handleSubmit() {
+    
+  }
+
   render() {
     const { t, classes } = this.props;
     return (
@@ -84,7 +87,7 @@ class SignUpGroup extends React.Component<IProps, IState> {
         <Typography component="h1" variant="h5">
           Sign up - group info
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
