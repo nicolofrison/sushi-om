@@ -6,9 +6,9 @@ import { TokenData } from "../interfaces/jwt.interface";
 import AuthPost from "../interfaces/auth.interface";
 import AuthenticationService from "../services/authentication.service";
 import AuthenticationUtils from "../utils/authentication";
-import GroupAlreadyExistsException from '../exceptions/GroupAlreadyExistsException';
-import GroupDoesNotExistsOrWrongPasswordException from '../exceptions/GroupDoesNotExistsOrWrongPasswordException';
-import UserAlreadyExistsInTheGroupException from '../exceptions/UserAlreadyExistsInTheGroupException';
+import GroupAlreadyExistsException from "../exceptions/GroupAlreadyExistsException";
+import GroupDoesNotExistsOrWrongPasswordException from "../exceptions/GroupDoesNotExistsOrWrongPasswordException";
+import UserAlreadyExistsInTheGroupException from "../exceptions/UserAlreadyExistsInTheGroupException";
 import HttpException from "../exceptions/HttpException";
 
 class AuthenticationController implements Controller {
@@ -47,7 +47,9 @@ class AuthenticationController implements Controller {
 
       if (createdUser != null) {
         const tokenData = AuthenticationUtils.createToken(createdUser);
-        response.setHeader("Set-Cookie", [AuthenticationController.createCookie(tokenData)]);
+        response.setHeader("Set-Cookie", [
+          AuthenticationController.createCookie(tokenData),
+        ]);
 
         response.status(200);
         response.send(createdUser);

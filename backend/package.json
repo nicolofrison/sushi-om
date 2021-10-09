@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "ts-node ./src/server.ts",
     "test": "jest",
-    "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/ormconfig.ts"
+    "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/ormconfig.ts",
+    "eslint": "eslint . --ext .ts",
+    "prettier": "prettier --write ."
   },
   "author": "",
   "license": "ISC",

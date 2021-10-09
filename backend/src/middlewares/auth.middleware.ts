@@ -14,7 +14,7 @@ async function authMiddleware(
   response: Response,
   next: NextFunction
 ) {
-  const {cookies} = request;
+  const { cookies } = request;
   if (cookies && cookies.Authorization) {
     const secret = process.env.JWT_SECRET;
     try {
@@ -22,7 +22,7 @@ async function authMiddleware(
         cookies.Authorization,
         secret
       ) as DataStoredInToken;
-      const {id} = verificationResponse;
+      const { id } = verificationResponse;
       const userRepo = getRepository(User);
       const user = await userRepo.findOne({ userId: id });
       if (user) {

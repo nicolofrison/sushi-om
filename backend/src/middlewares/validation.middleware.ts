@@ -10,9 +10,7 @@ import HttpException from "../exceptions/HttpException";
  * @param [skipMissingProperties] true if skip the validation of the properties that are null or undefined, otherwise false (default: false)
  * @returns middleware
  */
-function validationMiddleware(
-  type: any
-): express.RequestHandler {
+function validationMiddleware(type: any): express.RequestHandler {
   return (req, res, next) => {
     validate(plainToClass(type, req.body)).then((errors: ValidationError[]) => {
       if (errors.length > 0) {

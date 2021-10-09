@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    project: './tsconfig.json',
+    project: "./tsconfig.json",
   },
   plugins: ["@typescript-eslint", "jest"],
   extends: ["airbnb-typescript", "prettier"],
@@ -11,6 +11,6 @@ module.exports = {
     "jest/no-focused-tests": "error",
     "jest/no-identical-title": "error",
     "jest/prefer-to-have-length": "warn",
-    "jest/valid-expect": "error"
-  }
+    "jest/valid-expect": "error",
+  },
 };

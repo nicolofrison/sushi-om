@@ -5,9 +5,9 @@ import { mocked } from "ts-jest/utils";
 import AuthenticationService from "./authentication.service";
 import AuthenticationUtils from "../utils/authentication";
 import UserRepository from "../repositories/user.repository";
-import GroupAlreadyExistsException from '../exceptions/GroupAlreadyExistsException';
-import GroupDoesNotExistsOrWrongPasswordException from '../exceptions/GroupDoesNotExistsOrWrongPasswordException';
-import UserAlreadyExistsInTheGroupException from '../exceptions/UserAlreadyExistsInTheGroupException';
+import GroupAlreadyExistsException from "../exceptions/GroupAlreadyExistsException";
+import GroupDoesNotExistsOrWrongPasswordException from "../exceptions/GroupDoesNotExistsOrWrongPasswordException";
+import UserAlreadyExistsInTheGroupException from "../exceptions/UserAlreadyExistsInTheGroupException";
 
 (typeorm as any).getRepository = jest.fn();
 
@@ -53,9 +53,8 @@ describe("The AuthenticationService", () => {
     mocked(getCustomRepository).mockImplementation((customRepo) => {
       if (customRepo.name === UserRepository.name) {
         return userRepo;
-      } 
-        return groupRepo;
-      
+      }
+      return groupRepo;
     });
     const authenticationService = new AuthenticationService();
 
@@ -98,15 +97,15 @@ describe("The AuthenticationService", () => {
     mocked(getCustomRepository).mockImplementation((customRepo) => {
       if (customRepo.name === UserRepository.name) {
         return userRepo;
-      } 
-        return groupRepo;
-      
+      }
+      return groupRepo;
     });
     const authenticationService = new AuthenticationService();
 
-    it("should throw the GroupAlreadyExistsException", async () => expect(
-        authenticationService.createGroup(authPost)
-      ).rejects.toThrow(GroupAlreadyExistsException));
+    it("should throw the GroupAlreadyExistsException", async () =>
+      expect(authenticationService.createGroup(authPost)).rejects.toThrow(
+        GroupAlreadyExistsException
+      ));
   });
 
   describe("join a group", () => {
@@ -147,9 +146,8 @@ describe("The AuthenticationService", () => {
       mocked(getCustomRepository).mockImplementation((customRepo) => {
         if (customRepo.name === UserRepository.name) {
           return userRepo;
-        } 
-          return groupRepo;
-        
+        }
+        return groupRepo;
       });
       const authenticationService = new AuthenticationService();
 
@@ -190,9 +188,8 @@ describe("The AuthenticationService", () => {
       mocked(getCustomRepository).mockImplementation((customRepo) => {
         if (customRepo.name === UserRepository.name) {
           return userRepo;
-        } 
-          return groupRepo;
-        
+        }
+        return groupRepo;
       });
       const authenticationService = new AuthenticationService();
 
@@ -239,9 +236,8 @@ describe("The AuthenticationService", () => {
       mocked(getCustomRepository).mockImplementation((customRepo) => {
         if (customRepo.name === UserRepository.name) {
           return userRepo;
-        } 
-          return groupRepo;
-        
+        }
+        return groupRepo;
       });
       const authenticationService = new AuthenticationService();
 
@@ -288,9 +284,8 @@ describe("The AuthenticationService", () => {
       mocked(getCustomRepository).mockImplementation((customRepo) => {
         if (customRepo.name === UserRepository.name) {
           return userRepo;
-        } 
-          return groupRepo;
-        
+        }
+        return groupRepo;
       });
       const authenticationService = new AuthenticationService();
 
@@ -338,9 +333,8 @@ describe("The AuthenticationService", () => {
       mocked(getCustomRepository).mockImplementation((customRepo) => {
         if (customRepo.name === UserRepository.name) {
           return userRepo;
-        } 
-          return groupRepo;
-        
+        }
+        return groupRepo;
       });
       const authenticationService = new AuthenticationService();
 
@@ -396,9 +390,8 @@ describe("The AuthenticationService", () => {
       mocked(getCustomRepository).mockImplementation((customRepo) => {
         if (customRepo.name === UserRepository.name) {
           return userRepo;
-        } 
-          return groupRepo;
-        
+        }
+        return groupRepo;
       });
       const authenticationService = new AuthenticationService();
       return expect(authenticationService.joinGroup(authPost)).resolves.toEqual(
@@ -444,9 +437,8 @@ describe("The AuthenticationService", () => {
       mocked(getCustomRepository).mockImplementation((customRepo) => {
         if (customRepo.name === UserRepository.name) {
           return userRepo;
-        } 
-          return groupRepo;
-        
+        }
+        return groupRepo;
       });
       const authenticationService = new AuthenticationService();
       return expect(authenticationService.joinGroup(authPost)).resolves.toEqual(

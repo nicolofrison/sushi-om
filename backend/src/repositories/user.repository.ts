@@ -17,19 +17,14 @@ export default class UserRepository extends Repository<User> {
     name: string,
     surname: string,
     groupId: number
-  ) => (
-      (await this.findOne({
-        name,
-        surname,
-        username: null,
-        groupId,
-      })) ?? null
-    );
+  ) =>
+    (await this.findOne({
+      name,
+      surname,
+      username: null,
+      groupId,
+    })) ?? null;
 
-  public findByUsernameAndGroupId = async (
-    username: string,
-    groupId: number
-  ) => (
-      (await this.findOne({ username, groupId })) ?? null
-    );
+  public findByUsernameAndGroupId = async (username: string, groupId: number) =>
+    (await this.findOne({ username, groupId })) ?? null;
 }

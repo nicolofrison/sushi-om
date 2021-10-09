@@ -3,12 +3,11 @@ import GroupRepository from "../repositories/group.repository";
 import UserRepository from "../repositories/user.repository";
 import AuthPost from "../interfaces/auth.interface";
 import AuthenticationUtils from "../utils/authentication";
-import GroupAlreadyExistsException from '../exceptions/GroupAlreadyExistsException';
-import GroupDoesNotExistsOrWrongPasswordException from '../exceptions/GroupDoesNotExistsOrWrongPasswordException';
-import UserAlreadyExistsInTheGroupException from '../exceptions/UserAlreadyExistsInTheGroupException';
+import GroupAlreadyExistsException from "../exceptions/GroupAlreadyExistsException";
+import GroupDoesNotExistsOrWrongPasswordException from "../exceptions/GroupDoesNotExistsOrWrongPasswordException";
+import UserAlreadyExistsInTheGroupException from "../exceptions/UserAlreadyExistsInTheGroupException";
 
 class AuthenticationService {
-
   private groupRepo = getCustomRepository(GroupRepository);
 
   private userRepo = getCustomRepository(UserRepository);
@@ -79,7 +78,7 @@ class AuthenticationService {
       authData.surname,
       authData.username ?? null,
       alreadyExistentGroup.groupId
-    )
+    );
     return user;
   };
 }

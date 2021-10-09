@@ -8,5 +8,6 @@ export default class GroupRepository extends Repository<Group> {
     return this.save(group);
   };
 
-  public findByName = async (name: string) => (await this.findOne({ name })) ?? null;
+  public findByName = async (name: string) =>
+    (await this.findOne({ name })) ?? null;
 }
