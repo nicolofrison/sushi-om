@@ -1,11 +1,11 @@
-import User from "entities/user.entity";
 import { NextFunction, Response } from "express";
 import * as jwt from "jsonwebtoken";
-import { getRepository } from "typeorm";
+import { getCustomRepository } from "typeorm";
+import UserRepository from "../repositories/user.repository";
 import {
   AuthenticationTokenException,
   AuthenticationTokenExceptionType,
-} from "exceptions/authenticationExceptions";
+} from "../exceptions/authenticationExceptions";
 import { DataStoredInToken } from "../interfaces/jwt.interface";
 import RequestWithUser from "../interfaces/requestWithUser.interface";
 
@@ -23,7 +23,7 @@ async function authMiddleware(
         secret
       ) as DataStoredInToken;
       const { id } = verificationResponse;
-      const userRepo = getRepository(User);
+      const userRepo = getCustomRepository(UserRepository);
       const user = await userRepo.findOne({ userId: id });
       if (user) {
         request.user = user;

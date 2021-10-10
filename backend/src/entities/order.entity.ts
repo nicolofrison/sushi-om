@@ -3,8 +3,8 @@ import User from "./user.entity";
 
 @Entity()
 export default class Order {
-  @PrimaryGeneratedColumn()
-  orderId: number;
+  @PrimaryGeneratedColumn({ type: "int" })
+  orderId?: number;
 
   @ManyToOne(() => User)
   userId: number;
@@ -12,12 +12,18 @@ export default class Order {
   @Column()
   code: string;
 
-  @Column()
+  @Column({ type: "int" })
   amount: number;
 
   @Column()
-  checked: boolean;
+  checked?: boolean;
 
   @Column()
-  confirmed: boolean;
+  confirmed?: boolean;
+
+  constructor(userId: number, code: string, amount: number) {
+    this.userId = userId;
+    this.code = code;
+    this.amount = amount;
+  }
 }

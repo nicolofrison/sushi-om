@@ -11,7 +11,7 @@ import Group from "./group.entity";
 @Unique("uniqueName", ["name", "surname", "username", "groupId"])
 @Unique("uniqueUsername", ["username", "groupId"])
 export default class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: "int" })
   public userId?: number;
 
   @Column()

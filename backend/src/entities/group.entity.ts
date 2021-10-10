@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, Timestamp } from "typeorm";
 
 @Entity()
 export default class Group {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: "int" })
   groupId?: number;
 
   @Column({
