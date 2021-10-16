@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 import {withTranslation, WithTranslation} from "react-i18next";
 
@@ -9,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 
 import translations from '../Utils/TranslationKeys';
+import AuthPost from '../Interfaces/AuthPost.interface';
 
 const styles = (theme: any) => createStyles({
   paper: {
@@ -35,7 +37,12 @@ enum FormType {
   join
 }
 
-interface IProps extends WithStyles<typeof styles>, WithTranslation {}
+interface IProps extends WithStyles<typeof styles>, WithTranslation {
+  FirstName: string,
+  LastName: string,
+  Username: string,
+  SetStep: React.Dispatch<React.SetStateAction<string>>
+}
 
 interface IState {
   formType: FormType,
@@ -59,6 +66,7 @@ class SignUpGroup extends React.Component<IProps, IState> {
   }
 
   handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    console.log(this.props);
     const target = event.target;
     if (target != null) {
       const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -74,10 +82,25 @@ class SignUpGroup extends React.Component<IProps, IState> {
     this.setState({
       formType: type
     });
+
+    this.handleSubmit();
   }
 
   handleSubmit() {
-    
+    const authPost: AuthPost = {
+      name: this.props.FirstName,
+      surname: this.props.LastName,
+      username: this.props.Username === "" ? undefined : this.props.Username,
+      groupName: this.state.groupName,
+      groupPassword: this.state.groupPassword,
+      signType: this.state.formType === FormType.join ? "joinGroup" : "createGroup"
+    }
+
+    axios.post(`http://localhost:5000/auth/register`, authPost)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
   }
 
   render() {
@@ -87,7 +110,7 @@ class SignUpGroup extends React.Component<IProps, IState> {
         <Typography component="h1" variant="h5">
           Sign up - group info
         </Typography>
-        <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
+        <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -99,6 +122,7 @@ class SignUpGroup extends React.Component<IProps, IState> {
                 id="groupName"
                 label={t(translations.groupName)}
                 autoFocus
+                onChange={this.handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -106,18 +130,19 @@ class SignUpGroup extends React.Component<IProps, IState> {
                 variant="outlined"
                 required
                 fullWidth
-                name="password"
+                name="groupPassword"
                 label={t(translations.groupPassword)}
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={this.handleInputChange}
               />
             </Grid>
             <Grid item xs={6}>
-              <Button type="submit" size="large" variant="contained" color="primary" onClick={this.handleFormType.bind(this, FormType.create)} className={classes.submit}>{t(translations.createGroup)}</Button>
+              <Button size="large" variant="contained" color="primary" onClick={this.handleFormType.bind(this, FormType.create)} className={classes.submit}>{t(translations.createGroup)}</Button>
             </Grid>
             <Grid item xs={6}>
-              <Button type="submit" size="large" variant="contained" color="primary" onClick={this.handleFormType.bind(this, FormType.join)} className={classes.submit}>{t(translations.joinGroup)}</Button>
+              <Button size="large" variant="contained" color="primary" onClick={this.handleFormType.bind(this, FormType.join)} className={classes.submit}>{t(translations.joinGroup)}</Button>
             </Grid>
           </Grid>
         </form>

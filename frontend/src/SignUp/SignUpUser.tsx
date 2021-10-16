@@ -30,16 +30,52 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUpUser() {
+interface IProps {
+  SetFirstName: React.Dispatch<React.SetStateAction<string>>,
+  SetLastName: React.Dispatch<React.SetStateAction<string>>,
+  SetUsername: React.Dispatch<React.SetStateAction<string>>,
+  SetStep: React.Dispatch<React.SetStateAction<string>>
+}
+
+export default function SignUpUser(props: IProps) {
   const classes = useStyles();
   const { t } = useTranslation();
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const target = event.target;
+    if (target != null) {
+      // const value = target.type === 'checkbox' ? target.checked : target.value;
+      const value = target.value;
+      const name = target.name;
+      console.log(name);
+      switch(name) {
+        case "firstName":
+          props.SetFirstName(value);
+          break;
+        case "lastName":
+          props.SetLastName(value);
+          break;
+        case "username":
+          props.SetUsername(value);
+          break;
+        default:
+          console.error("The input is not managed")
+          break;
+      }
+    }
+  };
+
+  const handleSubmit = () =>
+  {
+    props.SetStep("group");
+  }
 
   return (
     <div>
       <Typography component="h1" variant="h5">
         Sign up - user info
       </Typography>
-      <form className={classes.form} noValidate>
+      <form className={classes.form} noValidate onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -51,6 +87,7 @@ export default function SignUpUser() {
               id="firstName"
               label={t(translations.firstName)}
               autoFocus
+              onChange={handleInputChange}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -62,6 +99,7 @@ export default function SignUpUser() {
               label={t(translations.lastName)}
               name="lastName"
               autoComplete="lname"
+              onChange={handleInputChange}
             />
           </Grid>
           <Grid item xs={12}>
@@ -72,6 +110,7 @@ export default function SignUpUser() {
               label="Username"
               name="username"
               autoComplete={t(translations.username)}
+              onChange={handleInputChange}
             />
           </Grid>
         </Grid>

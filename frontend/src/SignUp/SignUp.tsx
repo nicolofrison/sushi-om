@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
@@ -47,7 +47,10 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
 
-  let step = 'group'; // 'user' : 'group'
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [step, setStep] = useState("user");
 
   return (
     <Container component="main" maxWidth="xs">
@@ -56,10 +59,11 @@ export default function SignUp() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
+        {JSON.stringify({firstName, lastName, username})}
         {step === 'user' ?
-          <SignUpUser />
+          <SignUpUser SetFirstName={setFirstName} SetLastName={setLastName} SetUsername={setUsername} SetStep={setStep} />
         :
-          <SignUpGroup />
+          <SignUpGroup FirstName={firstName} LastName={lastName} Username={username} SetStep={setStep} />
         }
       </div>
       <Box mt={5}>

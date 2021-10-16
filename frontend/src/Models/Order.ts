@@ -4,5 +4,5 @@ export default interface order {
     code: number,
     amount: number,
     checked: boolean,
-    confirmed: boolean
+    round: number
 }
