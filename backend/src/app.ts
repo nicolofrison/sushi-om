@@ -2,6 +2,7 @@
 import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import * as express from "express";
+import * as cors from 'cors';
 import Controller from "./interfaces/controller.interface";
 import errorMiddleware from "./middlewares/error.middleware";
 
@@ -17,7 +18,11 @@ class App {
   }
 
   private initializePreRequestMiddlewares() {
-    this.app.use(bodyParser.json());
+    const options: cors.CorsOptions = {
+      origin: ['http://localhost:3000']
+    };
+    this.app.use(cors());
+    this.app.use(express.json());
     this.app.use(cookieParser());
   }
 
