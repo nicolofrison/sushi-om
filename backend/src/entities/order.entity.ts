@@ -18,8 +18,8 @@ export default class Order {
   @Column()
   checked?: boolean;
 
-  @Column()
-  confirmed?: boolean;
+  @Column({ type: "int" })
+  round?: number;
 
   constructor(userId: number, code: string, amount: number) {
     this.userId = userId;
