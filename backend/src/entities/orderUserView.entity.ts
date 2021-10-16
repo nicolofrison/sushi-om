@@ -1,10 +1,21 @@
-import { ViewColumn, ViewEntity } from "typeorm";
+import { ViewColumn, ViewEntity, Connection } from "typeorm";
+import Order from "./order.entity";
+import User from "./user.entity";
 
-@ViewEntity({
-  expression: `
-      SELECT "o"."orderId" AS "orderId","o"."code" AS "code","o"."amount" AS "amount","u"."userId" AS "userId","u"."name" AS "name","u"."surname" AS "surname","u"."username" AS "username","u"."groupId" AS "groupId","o"."checked" AS "checked","o"."confirmed" AS "confirmed"
-      FROM ("order" "o" join "user" "u" on("o"."userId" = "u"."userId"))
-  `,
+@ViewEntity({ 
+    expression: (connection: Connection) => connection.createQueryBuilder()
+        .select("o.orderId", "orderId")
+        .addSelect("o.code", "code")
+        .addSelect("o.amount", "amount")
+        .addSelect("u.userId", "userId")
+        .addSelect("u.name", "name")
+        .addSelect("u.surname", "surname")
+        .addSelect("u.username", "username")
+        .addSelect("u.groupId", "groupId")
+        .addSelect("o.checked", "checked")
+        .addSelect("o.round", "round")
+        .from(Order, "o")
+        .leftJoin(User, "u", "o.userId = u.userId")
 })
 export default class OrderUserView {
   @ViewColumn()
@@ -35,5 +46,5 @@ export default class OrderUserView {
   checked: boolean;
 
   @ViewColumn()
-  confirmed: boolean;
+  round?: number;
 }
