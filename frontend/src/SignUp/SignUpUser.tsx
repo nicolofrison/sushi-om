@@ -48,7 +48,7 @@ export default function SignUpUser(props: IProps) {
       // const value = target.type === 'checkbox' ? target.checked : target.value;
       const value = target.value;
       const name = target.name;
-      console.log(name);
+      
       switch(name) {
         case "firstName":
           props.SetFirstName(value);

@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
@@ -10,7 +12,8 @@ import Container from '@material-ui/core/Container';
 
 import SignUpUser from './SignUpUser';
 import SignUpGroup from './SignUpGroup';
-import { SignUpStep } from '../Utils/Enums';
+import { SignUpFormType, SignUpStep } from '../Utils/Enums';
+import AuthPost from '../Interfaces/AuthPost.interface';
 
 function Copyright() {
   return (
@@ -51,8 +54,35 @@ export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
+  const [groupName, setGroupName] = useState("");
+  const [groupPassword, setGroupPassword] = useState("");
+  const [formType, setFormType] = useState(SignUpFormType.create,);
   const [step, setStep] = useState(SignUpStep.user);
+  
+  const handleSubmit = () => {
+    const authPost: AuthPost = {
+      name: firstName,
+      surname: lastName,
+      username: username === "" ? undefined : username,
+      groupName,
+      groupPassword,
+      signType: formType === SignUpFormType.join ? "joinGroup" : "createGroup"
+    }
 
+    axios.post(`http://localhost:5000/auth/register`, authPost)
+      .then(res => {
+        console.log(res.data);
+
+        localStorage.setItem("user", JSON.stringify(res.data));
+      });
+  };
+
+  useEffect(() => {
+      if (step == SignUpStep.submit) {
+        handleSubmit();
+      }
+  }, [step]);
+  
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -64,7 +94,7 @@ export default function SignUp() {
         {step === SignUpStep.user ?
           <SignUpUser SetFirstName={setFirstName} SetLastName={setLastName} SetUsername={setUsername} SetStep={setStep} />
         :
-          <SignUpGroup FirstName={firstName} LastName={lastName} Username={username} />
+          <SignUpGroup SetGroupName={setGroupName} SetGroupPassword={setGroupPassword} SetFormType={setFormType} SetStep={setStep} />
         }
       </div>
       <Box mt={5}>

@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 
 import {withTranslation, WithTranslation} from "react-i18next";
 
@@ -34,15 +33,16 @@ const styles = (theme: any) => createStyles({
 });
 
 interface IProps extends WithStyles<typeof styles>, WithTranslation {
-  FirstName: string,
-  LastName: string,
-  Username: string
+  SetGroupName: React.Dispatch<React.SetStateAction<string>>,
+  SetGroupPassword: React.Dispatch<React.SetStateAction<string>>,
+  SetFormType: React.Dispatch<React.SetStateAction<SignUpFormType>>,
+  SetStep: (step: SignUpStep) => void
 }
 
 interface IState {
-  formType: SignUpFormType,
   groupName: string,
-  groupPassword: string
+  groupPassword: string,
+  formType: SignUpFormType
 }
 
 class SignUpGroup extends React.Component<IProps, IState> {
@@ -50,18 +50,13 @@ class SignUpGroup extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      formType: SignUpFormType.create,
       groupName: "",
-      groupPassword: ""
+      groupPassword: "",
+      formType: SignUpFormType.create
     };
-
-    this.handleInputChange = this.handleInputChange.bind(
-      this
-    );
   }
 
   handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    console.log(this.props);
     const target = event.target;
     if (target != null) {
       const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -78,24 +73,10 @@ class SignUpGroup extends React.Component<IProps, IState> {
       formType: type
     });
 
-    this.handleSubmit();
-  }
-
-  handleSubmit() {
-    const authPost: AuthPost = {
-      name: this.props.FirstName,
-      surname: this.props.LastName,
-      username: this.props.Username === "" ? undefined : this.props.Username,
-      groupName: this.state.groupName,
-      groupPassword: this.state.groupPassword,
-      signType: this.state.formType === SignUpFormType.join ? "joinGroup" : "createGroup"
-    }
-
-    axios.post(`http://localhost:5000/auth/register`, authPost)
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      })
+    this.props.SetGroupName(this.state.groupName);
+    this.props.SetGroupPassword(this.state.groupPassword);
+    this.props.SetFormType(this.state.formType);
+    this.props.SetStep(SignUpStep.submit);
   }
 
   render() {
@@ -117,7 +98,7 @@ class SignUpGroup extends React.Component<IProps, IState> {
                 id="groupName"
                 label={t(translations.groupName)}
                 autoFocus
-                onChange={this.handleInputChange}
+                onChange={this.handleInputChange.bind(this)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -130,7 +111,7 @@ class SignUpGroup extends React.Component<IProps, IState> {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={this.handleInputChange}
+                onChange={this.handleInputChange.bind(this)}
               />
             </Grid>
             <Grid item xs={6}>
