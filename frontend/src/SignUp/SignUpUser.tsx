@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import translations from '../Utils/TranslationKeys';
+import { SignUpStep } from '../Utils/Enums';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,7 +35,7 @@ interface IProps {
   SetFirstName: React.Dispatch<React.SetStateAction<string>>,
   SetLastName: React.Dispatch<React.SetStateAction<string>>,
   SetUsername: React.Dispatch<React.SetStateAction<string>>,
-  SetStep: React.Dispatch<React.SetStateAction<string>>
+  SetStep: React.Dispatch<React.SetStateAction<SignUpStep>>
 }
 
 export default function SignUpUser(props: IProps) {
@@ -67,7 +68,7 @@ export default function SignUpUser(props: IProps) {
 
   const handleSubmit = () =>
   {
-    props.SetStep("group");
+    props.SetStep(SignUpStep.group);
   }
 
   return (

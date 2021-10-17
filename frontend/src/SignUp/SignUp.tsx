@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Container';
 
 import SignUpUser from './SignUpUser';
 import SignUpGroup from './SignUpGroup';
+import { SignUpStep } from '../Utils/Enums';
 
 function Copyright() {
   return (
@@ -50,7 +51,7 @@ export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
-  const [step, setStep] = useState("user");
+  const [step, setStep] = useState(SignUpStep.user);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -60,10 +61,10 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         {JSON.stringify({firstName, lastName, username})}
-        {step === 'user' ?
+        {step === SignUpStep.user ?
           <SignUpUser SetFirstName={setFirstName} SetLastName={setLastName} SetUsername={setUsername} SetStep={setStep} />
         :
-          <SignUpGroup FirstName={firstName} LastName={lastName} Username={username} SetStep={setStep} />
+          <SignUpGroup FirstName={firstName} LastName={lastName} Username={username} />
         }
       </div>
       <Box mt={5}>

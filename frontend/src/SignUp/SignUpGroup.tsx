@@ -11,6 +11,7 @@ import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 
 import translations from '../Utils/TranslationKeys';
 import AuthPost from '../Interfaces/AuthPost.interface';
+import { SignUpFormType, SignUpStep } from '../Utils/Enums';
 
 const styles = (theme: any) => createStyles({
   paper: {
@@ -32,20 +33,14 @@ const styles = (theme: any) => createStyles({
   },
 });
 
-enum FormType {
-  create,
-  join
-}
-
 interface IProps extends WithStyles<typeof styles>, WithTranslation {
   FirstName: string,
   LastName: string,
-  Username: string,
-  SetStep: React.Dispatch<React.SetStateAction<string>>
+  Username: string
 }
 
 interface IState {
-  formType: FormType,
+  formType: SignUpFormType,
   groupName: string,
   groupPassword: string
 }
@@ -55,7 +50,7 @@ class SignUpGroup extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      formType: FormType.create,
+      formType: SignUpFormType.create,
       groupName: "",
       groupPassword: ""
     };
@@ -78,7 +73,7 @@ class SignUpGroup extends React.Component<IProps, IState> {
     }
   }
 
-  handleFormType(type: FormType) {
+  handleFormType(type: SignUpFormType) {
     this.setState({
       formType: type
     });
@@ -93,7 +88,7 @@ class SignUpGroup extends React.Component<IProps, IState> {
       username: this.props.Username === "" ? undefined : this.props.Username,
       groupName: this.state.groupName,
       groupPassword: this.state.groupPassword,
-      signType: this.state.formType === FormType.join ? "joinGroup" : "createGroup"
+      signType: this.state.formType === SignUpFormType.join ? "joinGroup" : "createGroup"
     }
 
     axios.post(`http://localhost:5000/auth/register`, authPost)
@@ -139,10 +134,10 @@ class SignUpGroup extends React.Component<IProps, IState> {
               />
             </Grid>
             <Grid item xs={6}>
-              <Button size="large" variant="contained" color="primary" onClick={this.handleFormType.bind(this, FormType.create)} className={classes.submit}>{t(translations.createGroup)}</Button>
+              <Button size="large" variant="contained" color="primary" onClick={this.handleFormType.bind(this, SignUpFormType.create)} className={classes.submit}>{t(translations.createGroup)}</Button>
             </Grid>
             <Grid item xs={6}>
-              <Button size="large" variant="contained" color="primary" onClick={this.handleFormType.bind(this, FormType.join)} className={classes.submit}>{t(translations.joinGroup)}</Button>
+              <Button size="large" variant="contained" color="primary" onClick={this.handleFormType.bind(this, SignUpFormType.join)} className={classes.submit}>{t(translations.joinGroup)}</Button>
             </Grid>
           </Grid>
         </form>
