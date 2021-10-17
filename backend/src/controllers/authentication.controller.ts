@@ -47,9 +47,7 @@ class AuthenticationController implements Controller {
 
       if (createdUser != null) {
         const tokenData = AuthenticationUtils.createToken(createdUser);
-        response.setHeader("Set-Cookie", [
-          AuthenticationController.createCookie(tokenData),
-        ]);
+        createdUser.accessToken = tokenData;
 
         response.status(200);
         response.send(createdUser);
@@ -67,10 +65,6 @@ class AuthenticationController implements Controller {
       }
     }
   };
-
-  private static createCookie(tokenData: TokenData) {
-    return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
-  }
 }
 
 export default AuthenticationController;
