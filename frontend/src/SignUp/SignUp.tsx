@@ -14,6 +14,7 @@ import SignUpUser from './SignUpUser';
 import SignUpGroup from './SignUpGroup';
 import { SignUpFormType, SignUpStep } from '../Utils/Enums';
 import AuthPost from '../Interfaces/AuthPost.interface';
+import User from '../Interfaces/User.interface';
 
 function Copyright() {
   return (
@@ -68,12 +69,14 @@ export default function SignUp() {
       groupPassword,
       signType: formType === SignUpFormType.join ? "joinGroup" : "createGroup"
     }
-
+    localStorage.removeItem("user");
     axios.post(`http://localhost:5000/auth/register`, authPost)
       .then(res => {
         console.log(res.data);
 
+        const user = res.data as User;
         localStorage.setItem("user", JSON.stringify(res.data));
+        window.location.reload();
       });
   };
 
