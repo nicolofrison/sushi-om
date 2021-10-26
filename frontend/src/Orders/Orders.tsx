@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {withTranslation, WithTranslation} from "react-i18next";
+import {withTranslation} from "react-i18next";
 
-import { makeStyles, withStyles, createStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,7 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
-import translations from '../Utils/TranslationKeys';
+import OrderService from '../services/order.service';
 
 const styles = (theme: any) => createStyles({
   paper: {
@@ -46,14 +46,41 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49),
 ];
 
-class Orders extends React.Component {
+interface IProps {}
+
+interface IState {
+  orders: any[]
+}
+
+class Orders extends React.Component<IProps, IState> {
+
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      orders: []
+    };
+  }
 
     componentDidMount() {
+      const jsonUser = localStorage.getItem("user");
+      if (!jsonUser) {
+        window.location.reload();
+        return;
+      }
+      const user = JSON.parse(jsonUser);
+      console.log(user);
+      if (!user.accessToken) {
+        localStorage.removeItem("user");
+        window.location.reload();
+        return;
+      }
 
-    }
+      OrderService.getOrders(user.accessToken)
+      .then(res => {
+        this.setState({orders: res.data as any[]});
 
-    getOrders() {
-        
+        console.log(res.data);
+      });
     }
 
     render() {
@@ -69,7 +96,7 @@ class Orders extends React.Component {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
+                    {this.state.orders.map((row) => (
                     <TableRow key={row.code}>
                         <TableCell component="th" scope="row">
                         {row.code}
