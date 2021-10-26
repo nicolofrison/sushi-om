@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
   ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import Group from "./group.entity";
 
@@ -25,8 +26,9 @@ export default class User {
   })
   public username: string;
 
-  @ManyToOne(() => Group)
-  public groupId: number;
+  @ManyToOne(type => Group)
+  @JoinColumn({ name: "groupId" })
+  groupId: number;
 
   @Column({
     default: false,
