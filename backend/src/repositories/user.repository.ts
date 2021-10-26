@@ -9,8 +9,8 @@ export default class UserRepository extends Repository<User> {
     username: string,
     groupId: number
   ) => {
-    const group = new User(name, surname, username, groupId);
-    return this.save(group);
+    const user = new User(name, surname, username, groupId);
+    return this.save(user);
   };
 
   public findByNameAndSurnameAndGroupIdWithoutUsername = async (

@@ -6,7 +6,7 @@ import User from "../entities/user.entity";
 export default class AuthenticationUtils {
   public static createToken(user: User): TokenData {
     const dataStoredInToken: DataStoredInToken = {
-      id: user.userId,
+      user
     };
     const secret = process.env.JWT_SECRET;
     const expiresIn = parseInt(process.env.JWT_EXPIRATION, 10); // an hour

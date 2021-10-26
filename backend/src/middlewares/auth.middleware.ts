@@ -14,17 +14,19 @@ async function authMiddleware(
   response: Response,
   next: NextFunction
 ) {
-  const { cookies } = request;
-  if (cookies && cookies.Authorization) {
+  const { headers } = request;
+  const authorization = headers?.authorization;
+  if (authorization) {
+    console.log(authorization);
     const secret = process.env.JWT_SECRET;
     try {
       const verificationResponse = jwt.verify(
-        cookies.Authorization,
+        authorization,
         secret
       ) as DataStoredInToken;
-      const { id } = verificationResponse;
+      const { userId } = verificationResponse.user;
       const userRepo = getCustomRepository(UserRepository);
-      const user = await userRepo.findOne({ userId: id });
+      const user = await userRepo.findOne({ userId });
       if (user) {
         request.user = user;
         next();

@@ -1,5 +1,7 @@
+import User from "entities/user.entity";
+
 export interface DataStoredInToken {
-  id: number;
+  user: User;
 }
 
 export interface TokenData {

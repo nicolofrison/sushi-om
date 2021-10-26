@@ -15,6 +15,7 @@ import SignUpGroup from './SignUpGroup';
 import { SignUpFormType, SignUpStep } from '../Utils/Enums';
 import AuthPost from '../Interfaces/AuthPost.interface';
 import User from '../Interfaces/User.interface';
+import UserService from '../services/user.service';
 
 function Copyright() {
   return (
@@ -70,7 +71,7 @@ export default function SignUp() {
       signType: formType === SignUpFormType.join ? "joinGroup" : "createGroup"
     }
     localStorage.removeItem("user");
-    axios.post(`http://localhost:5000/auth/register`, authPost)
+    UserService.signUp(authPost)
       .then(res => {
         console.log(res.data);
 
