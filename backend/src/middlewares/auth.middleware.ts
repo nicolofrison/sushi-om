@@ -26,7 +26,7 @@ async function authMiddleware(
       ) as DataStoredInToken;
       const { userId } = verificationResponse.user;
       const userRepo = getCustomRepository(UserRepository);
-      const user = await userRepo.findOne({ userId });
+      const user = await userRepo.findOne(userId);
       if (user) {
         request.user = user;
         next();
