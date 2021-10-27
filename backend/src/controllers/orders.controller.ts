@@ -49,6 +49,7 @@ class OrdersController implements Controller {
   private initializeRoutes() {
     this.router
       .all(`${this.path}`, authMiddleware)
+      .all(`${this.path}/:id`, authMiddleware)
       .get(`${this.path}`, 
         query("groupId").optional().isInt().custom(this.queryGroupIdMiddleware), 
         query("userId").optional().isInt().custom(this.queryUserIdMiddleware), 
@@ -172,8 +173,8 @@ class OrdersController implements Controller {
     response: express.Response,
     next: express.NextFunction
   ) => {
-    const orderId = parseInt(request.params.id, 10);
-
+    const orderId = +request.params.id;
+    
     try {
       const updatedOrder = await this.orderService.deleteOrder(
         orderId,
