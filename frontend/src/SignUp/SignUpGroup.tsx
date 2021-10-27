@@ -69,13 +69,10 @@ class SignUpGroup extends React.Component<IProps, IState> {
   }
 
   handleFormType(type: SignUpFormType) {
-    this.setState({
-      formType: type
-    });
 
     this.props.SetGroupName(this.state.groupName);
     this.props.SetGroupPassword(this.state.groupPassword);
-    this.props.SetFormType(this.state.formType);
+    this.props.SetFormType(type);
     this.props.SetStep(SignUpStep.submit);
   }
 

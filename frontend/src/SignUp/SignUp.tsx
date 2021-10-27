@@ -58,7 +58,7 @@ export default function SignUp() {
   const [username, setUsername] = useState("");
   const [groupName, setGroupName] = useState("");
   const [groupPassword, setGroupPassword] = useState("");
-  const [formType, setFormType] = useState(SignUpFormType.create,);
+  const [formType, setFormType] = useState(SignUpFormType.create);
   const [step, setStep] = useState(SignUpStep.user);
   
   const handleSubmit = () => {
