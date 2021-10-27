@@ -10,3 +10,8 @@ export enum SignUpFormType {
     join
 }
   
+export enum OrdersType {
+  user, // user's orders
+  group,  // 
+  all // all confirmed orders
+}

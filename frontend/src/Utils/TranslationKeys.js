@@ -12,5 +12,8 @@ export default {
     users: "users",
     actions: "actions",
     remove: "remove",
-    add: "add"
+    add: "add",
+    usersOrders: "usersOrders",
+    groupOrders: "groupOrders",
+    allConfirmedOrders: "allConfirmedOrders"
 };

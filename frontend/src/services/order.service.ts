@@ -28,7 +28,10 @@ export class OrderService {
     }
 
     public getOrders(token: string, groupId: number = -1, userId: number = -1) {
-        return axios.get(baseUrl + "orders", this.config(token));
+        let query = groupId > -1 ? `groupId=${groupId}` : "";
+        query += userId > -1 ? (query.length > 0 ? "&" : "") + `userId=${userId}` : "";
+        query = query.length > 0 ? `?${query}` : "";
+        return axios.get(baseUrl + "orders" + query, this.config(token));
     }
 }
 
