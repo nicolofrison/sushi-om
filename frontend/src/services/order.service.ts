@@ -1,4 +1,5 @@
 import axios from 'axios';
+import OrderPost from '../Interfaces/OrderPost.interface';
 
 const baseUrl = "http://localhost:5000/";
 
@@ -13,12 +14,21 @@ export class OrderService {
         return OrderService.instance;
     }
 
-    public getOrders(token: string, groupId: number = -1, userId: number = -1) {
-        return axios.get(baseUrl + "orders", {
+    private config(token: string) {
+        return {
             headers: {
-                'Authorization': token
+                'Authorization': token,
+                'Content-Type': 'application/json; charset=utf-8'
             }
-        });
+        }
+    }
+
+    public addOrder(token: string, orderPost: OrderPost) {
+        return axios.post(baseUrl + "orders", orderPost, this.config(token));
+    }
+
+    public getOrders(token: string, groupId: number = -1, userId: number = -1) {
+        return axios.get(baseUrl + "orders", this.config(token));
     }
 }
 

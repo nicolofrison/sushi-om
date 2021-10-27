@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {withTranslation} from "react-i18next";
+import {WithTranslation, withTranslation} from "react-i18next";
 
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -12,7 +12,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
+import translations from '../Utils/TranslationKeys';
 import OrderService from '../services/order.service';
+import { TextField, WithStyles } from '@material-ui/core';
+import OrderPost from '../Interfaces/OrderPost.interface';
+import User from '../Interfaces/User.interface';
 
 const styles = (theme: any) => createStyles({
   paper: {
@@ -46,10 +50,12 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49),
 ];
 
-interface IProps {}
+interface IProps extends WithStyles<typeof styles>, WithTranslation {}
 
 interface IState {
-  orders: any[]
+  orders: any[],
+  code: string,
+  amount: number
 }
 
 class Orders extends React.Component<IProps, IState> {
@@ -57,23 +63,35 @@ class Orders extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      orders: []
+      orders: [],
+      code: "",
+      amount: 0
     };
   }
 
+  getUser() {
+    const jsonUser = localStorage.getItem("user");
+    if (!jsonUser) {
+      window.location.reload();
+      return;
+    }
+    const user = JSON.parse(jsonUser);
+    console.log(user);
+    if (!user.accessToken) {
+      localStorage.removeItem("user");
+      window.location.reload();
+      return;
+    }
+
+    return user;
+  }
+
     componentDidMount() {
-      const jsonUser = localStorage.getItem("user");
-      if (!jsonUser) {
-        window.location.reload();
-        return;
-      }
-      const user = JSON.parse(jsonUser);
-      console.log(user);
-      if (!user.accessToken) {
-        localStorage.removeItem("user");
-        window.location.reload();
-        return;
-      }
+      this.getOrders();
+    }
+
+    getOrders() {
+      const user = this.getUser();
 
       OrderService.getOrders(user.accessToken)
       .then(res => {
@@ -83,28 +101,105 @@ class Orders extends React.Component<IProps, IState> {
       });
     }
 
+    handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+      const target = event.target;
+      if (target != null) {
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+  
+        this.setState({
+          [name]: value
+        } as unknown as IState);
+      }
+    }
+
+    addOrder() {
+      const orderPost: OrderPost = {
+        code: this.state.code,
+        amount: +this.state.amount
+      };
+
+      console.log(this.state.amount);
+
+      const user: User = this.getUser();
+
+      OrderService.addOrder(user.accessToken, orderPost)
+      .then(res => {
+        console.log(res.data);
+
+        this.setState({code: "", amount: 0});
+
+        this.getOrders();
+      });
+    }
+
+    getEditRow() {
+      const { t, classes } = this.props;
+      return (
+        <TableRow key="add">
+        <TableCell />
+          <TableCell align="center">
+            <TextField
+                  autoComplete="code"
+                  name="code"
+                  variant="outlined"
+                  required
+                  id="code"
+                  label={t(translations.code)}
+                  autoFocus
+                  fullWidth
+                  onChange={this.handleInputChange.bind(this)}
+                  value={this.state.code}
+                />
+          </TableCell>
+          <TableCell align="center">
+                <TextField
+                      autoComplete="amount"
+                      name="amount"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="amount"
+                      inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                      label={t(translations.amount)}
+                      autoFocus
+                      onChange={this.handleInputChange.bind(this)}
+                      value={this.state.amount}
+                    />
+          </TableCell>
+        <TableCell />
+          <TableCell align="center">
+              <Button size="large" variant="contained" color="primary" onClick={this.addOrder.bind(this)} className={classes.submit}>{t(translations.add)}</Button>
+          </TableCell>
+        </TableRow>
+      )
+    }
+
     render() {
+      const { t, classes } = this.props;
         return (
             <TableContainer component={Paper}>
                 <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
+                      <TableCell />
                     <TableCell align="center">Code</TableCell>
                     <TableCell align="center">Amount</TableCell>
-                    <TableCell align="center">Users</TableCell>
-                    <TableCell align="center">Actions</TableCell>
+                    <TableCell align="center">Round</TableCell>
+                    <TableCell align="center">Actions{/*Users*/}</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
+                    {this.getEditRow()}
                     {this.state.orders.map((row) => (
                     <TableRow key={row.code}>
                         <TableCell component="th" scope="row">
-                        {row.code}
+                        
                         </TableCell>
-                        <TableCell align="right">{row.code}</TableCell>
-                        <TableCell align="right">{row.amount}</TableCell>
-                        <TableCell align="right">{row.users}</TableCell>
-                        <TableCell align="right">
+                        <TableCell align="center">{row.code}</TableCell>
+                        <TableCell align="center">{row.amount}</TableCell>
+                        <TableCell align="center">{row.round}</TableCell>
+                        <TableCell align="center">
                             <Button size="large" variant="contained" style={{backgroundColor: 'red', color: '#FFFFFF'}} >{"Remove"}</Button>{row.actions}
                         </TableCell>
                     </TableRow>
