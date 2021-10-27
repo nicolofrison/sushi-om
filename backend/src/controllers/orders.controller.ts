@@ -101,7 +101,7 @@ class OrdersController implements Controller {
     try {
       response.status(200);
       response.json(
-        await this.orderService.readOrdersByGroupId(request.user.groupId)
+        await this.orderService.readOrdersByUserId(request.user.userId)
       );
     } catch (e) {
       console.error(e);

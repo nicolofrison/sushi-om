@@ -15,10 +15,10 @@ export default class Order {
   @Column({ type: "int" })
   amount: number;
 
-  @Column()
+  @Column({default: false})
   checked?: boolean;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", nullable: true })
   round?: number;
 
   constructor(userId: number, code: string, amount: number) {
