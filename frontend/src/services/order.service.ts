@@ -33,6 +33,10 @@ export class OrderService {
         query = query.length > 0 ? `?${query}` : "";
         return axios.get(baseUrl + "orders" + query, this.config(token));
     }
+
+    public deleteOrder(token: string, orderId: number) {
+        return axios.delete(`${baseUrl}orders/${orderId}`, this.config(token));
+    }
 }
 
 export default OrderService.getInstance();

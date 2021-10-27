@@ -90,17 +90,17 @@ class OrdersList extends React.Component<IProps, IState> {
   }
 
     componentDidMount() {
-      this.getOrders();
+      this.updateOrders();
     }
 
     componentDidUpdate(prevProps: IProps) {
       if(this.props.OrdersType != prevProps.OrdersType)
       {
-        this.getOrders();
+        this.updateOrders();
       }
     }
 
-    getOrders() {
+    updateOrders() {
       const user = this.getUser();
       const userId = this.props.OrdersType == OrdersType.user ? user.userId : -1;
       const groupId = this.props.OrdersType == OrdersType.group ? user.groupId : -1;
@@ -111,6 +111,17 @@ class OrdersList extends React.Component<IProps, IState> {
 
         console.log(res.data);
       });
+    }
+
+    deleteOrder(orderId: number) {
+      const user = this.getUser();
+
+      OrderService.deleteOrder(user.accessToken, orderId)
+      .then(res => {
+        console.log(res.data);
+
+        this.updateOrders();
+      })
     }
 
     handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -141,7 +152,7 @@ class OrdersList extends React.Component<IProps, IState> {
 
         this.setState({code: "", amount: 0});
 
-        this.getOrders();
+        this.updateOrders();
       });
     }
 
@@ -212,7 +223,9 @@ class OrdersList extends React.Component<IProps, IState> {
                         <TableCell align="center">{row.amount}</TableCell>
                         <TableCell align="center">{row.round}</TableCell>
                         <TableCell align="center">
-                            <Button size="large" variant="contained" style={{backgroundColor: 'red', color: '#FFFFFF'}} >{"Remove"}</Button>{row.actions}
+                          {this.props.OrdersType == OrdersType.user ? 
+                            <Button size="large" variant="contained" style={{backgroundColor: 'red', color: '#FFFFFF'}} onClick={() => this.deleteOrder(row.orderId)}>{"Remove"}</Button>
+                          : ""}
                         </TableCell>
                     </TableRow>
                     ))}
