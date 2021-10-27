@@ -3,13 +3,9 @@ import './App.css';
 import Orders from './Orders/Orders';
 import SignUp from './SignUp/SignUp';
 import TranslationSelection from './Utils/TranslationSelection';
+import UserUtils from './Utils/UserUtils';
 
 function App() {
-  let loggedIn = false;
-  if (localStorage.getItem("userId")) {
-    loggedIn = true;
-  }
-
   return (
     <Suspense fallback="loading">
       <div className="App">
@@ -23,7 +19,7 @@ function App() {
 }
 
 function Content() {
-  if (localStorage.getItem("user")) {
+  if (UserUtils.IsLoggedIn()) {
     return <Orders />;
   } else {
     return <SignUp />;

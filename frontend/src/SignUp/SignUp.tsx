@@ -16,6 +16,7 @@ import { SignUpFormType, SignUpStep } from '../Utils/Enums';
 import AuthPost from '../Interfaces/AuthPost.interface';
 import User from '../Interfaces/User.interface';
 import UserService from '../services/user.service';
+import UserUtils from '../Utils/UserUtils';
 
 function Copyright() {
   return (
@@ -70,14 +71,12 @@ export default function SignUp() {
       groupPassword,
       signType: formType === SignUpFormType.join ? "joinGroup" : "createGroup"
     }
-    localStorage.removeItem("user");
+    UserUtils.removeUser();
     UserService.signUp(authPost)
       .then(res => {
         console.log(res.data);
 
-        const user = res.data as User;
-        localStorage.setItem("user", JSON.stringify(res.data));
-        window.location.reload();
+        UserUtils.setUser(res.data as User);
       });
   };
 

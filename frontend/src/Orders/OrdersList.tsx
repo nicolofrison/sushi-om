@@ -18,6 +18,7 @@ import { TextField, WithStyles } from '@material-ui/core';
 import OrderPost from '../Interfaces/OrderPost.interface';
 import User from '../Interfaces/User.interface';
 import { OrdersType } from '../Utils/Enums';
+import UserUtils from '../Utils/UserUtils';
 
 const styles = (theme: any) => createStyles({
   paper: {
@@ -72,23 +73,6 @@ class OrdersList extends React.Component<IProps, IState> {
     };
   }
 
-  getUser() {
-    const jsonUser = localStorage.getItem("user");
-    if (!jsonUser) {
-      window.location.reload();
-      return;
-    }
-    const user = JSON.parse(jsonUser);
-    console.log(user);
-    if (!user.accessToken) {
-      localStorage.removeItem("user");
-      window.location.reload();
-      return;
-    }
-
-    return user;
-  }
-
     componentDidMount() {
       this.updateOrders();
     }
@@ -101,7 +85,12 @@ class OrdersList extends React.Component<IProps, IState> {
     }
 
     updateOrders() {
-      const user = this.getUser();
+      const user = UserUtils.getUser();
+      if (user == null) {
+        window.location.reload();
+        return;
+      }
+
       const userId = this.props.OrdersType == OrdersType.user ? user.userId : -1;
       const groupId = this.props.OrdersType == OrdersType.group ? user.groupId : -1;
 
@@ -114,9 +103,13 @@ class OrdersList extends React.Component<IProps, IState> {
     }
 
     deleteOrder(orderId: number) {
-      const user = this.getUser();
+      const accessToken = UserUtils.getToken();
+      if (accessToken == null) {
+        window.location.reload();
+        return;
+      }
 
-      OrderService.deleteOrder(user.accessToken, orderId)
+      OrderService.deleteOrder(accessToken, orderId)
       .then(res => {
         console.log(res.data);
 
@@ -144,7 +137,11 @@ class OrdersList extends React.Component<IProps, IState> {
 
       console.log(this.state.amount);
 
-      const user: User = this.getUser();
+      const user: User | null = UserUtils.getUser();
+      if (user == null) {
+        window.location.reload();
+        return;
+      }
 
       OrderService.addOrder(user.accessToken, orderPost)
       .then(res => {
