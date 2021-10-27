@@ -19,6 +19,7 @@ import OrderPost from '../Interfaces/OrderPost.interface';
 import User from '../Interfaces/User.interface';
 import { OrdersType } from '../Utils/Enums';
 import UserUtils from '../Utils/UserUtils';
+import AddOrder from './AddOrder';
 
 const styles = (theme: any) => createStyles({
   paper: {
@@ -39,18 +40,6 @@ const styles = (theme: any) => createStyles({
     margin: theme.spacing(3, 0, 2),
   },
 });
-
-function createData(code: string, amount: number, users: number, actions: number) {
-  return { code, amount, users, actions };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24),
-  createData('Ice cream sandwich', 237, 9.0, 37),
-  createData('Eclair', 262, 16.0, 24),
-  createData('Cupcake', 305, 3.7, 67),
-  createData('Gingerbread', 356, 16.0, 49),
-];
 
 interface IProps extends WithStyles<typeof styles>, WithTranslation {
   OrdersType: OrdersType
@@ -153,48 +142,6 @@ class OrdersList extends React.Component<IProps, IState> {
       });
     }
 
-    getEditRow() {
-      const { t, classes } = this.props;
-      return (
-        <TableRow key="add">
-        <TableCell />
-          <TableCell align="center">
-            <TextField
-                  autoComplete="code"
-                  name="code"
-                  variant="outlined"
-                  required
-                  id="code"
-                  label={t(translations.code)}
-                  autoFocus
-                  fullWidth
-                  onChange={this.handleInputChange.bind(this)}
-                  value={this.state.code}
-                />
-          </TableCell>
-          <TableCell align="center">
-                <TextField
-                      autoComplete="amount"
-                      name="amount"
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="amount"
-                      inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                      label={t(translations.amount)}
-                      autoFocus
-                      onChange={this.handleInputChange.bind(this)}
-                      value={this.state.amount}
-                    />
-          </TableCell>
-        <TableCell />
-          <TableCell align="center">
-              <Button size="large" variant="contained" color="primary" onClick={this.addOrder.bind(this)} className={classes.submit}>{t(translations.add)}</Button>
-          </TableCell>
-        </TableRow>
-      )
-    }
-
     render() {
       const { t, classes } = this.props;
         return (
@@ -210,7 +157,7 @@ class OrdersList extends React.Component<IProps, IState> {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {this.getEditRow()}
+                    {this.props.OrdersType == OrdersType.user ? <AddOrder updateOrders={this.updateOrders.bind(this)} /> : ""}
                     {this.state.orders.map((row) => (
                     <TableRow key={row.code}>
                         <TableCell component="th" scope="row">
