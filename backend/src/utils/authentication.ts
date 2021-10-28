@@ -4,16 +4,13 @@ import { DataStoredInToken, TokenData } from "../interfaces/jwt.interface";
 import User from "../entities/user.entity";
 
 export default class AuthenticationUtils {
-  public static createToken(user: User): TokenData {
+  public static createToken(user: User): string {
     const dataStoredInToken: DataStoredInToken = {
       user
     };
     const secret = process.env.JWT_SECRET;
-    const expiresIn = parseInt(process.env.JWT_EXPIRATION, 10); // an hour
-    return {
-      expiresIn,
-      token: jwt.sign(dataStoredInToken, secret, { expiresIn }),
-    };
+    const expiresIn = process.env.JWT_EXPIRATION; // an hour
+    return jwt.sign(dataStoredInToken, secret, { expiresIn });
   }
 
   public static hash = async (toHash: string) => bcrypt.hash(toHash, 10);

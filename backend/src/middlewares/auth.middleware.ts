@@ -38,6 +38,7 @@ async function authMiddleware(
         );
       }
     } catch (error) {
+      console.error(error);
       next(
         new AuthenticationTokenException(AuthenticationTokenExceptionType.Wrong)
       );

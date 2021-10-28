@@ -46,8 +46,8 @@ class AuthenticationController implements Controller {
       }
 
       if (createdUser != null) {
-        const tokenData = AuthenticationUtils.createToken(createdUser);
-        createdUser.accessToken = tokenData.token;
+        const token = AuthenticationUtils.createToken(createdUser);
+        createdUser.accessToken = token;
 
         response.status(200);
         response.send(createdUser);

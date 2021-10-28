@@ -7,7 +7,7 @@ export default function validateEnv() {
   cleanEnv(process.env, {
     PORT: port(),
     JWT_SECRET: str(),
-    JWT_EXPIRATION: num(),
+    JWT_EXPIRATION: str(),
     MONGO_PASSWORD: str(),
     MONGO_PATH: str(),
     MONGO_USER: str(),
