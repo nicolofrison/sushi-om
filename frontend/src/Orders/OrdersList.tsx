@@ -2,46 +2,26 @@ import React from 'react';
 
 import {WithTranslation, withTranslation} from "react-i18next";
 
-import { withStyles, createStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+import { withStyles, createStyles } from '@mui/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 
 import translations from '../Utils/TranslationKeys';
 import OrderService from '../services/order.service';
-import { TextField, WithStyles } from '@material-ui/core';
+import { TextField } from '@mui/material';
 import OrderPost from '../Interfaces/OrderPost.interface';
 import User from '../Interfaces/User.interface';
 import { OrdersType } from '../Utils/Enums';
 import UserUtils from '../Utils/UserUtils';
 import AddOrder from './AddOrder';
 
-const styles = (theme: any) => createStyles({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-});
-
-interface IProps extends WithStyles<typeof styles>, WithTranslation {
+interface IProps extends WithTranslation {
   OrdersType: OrdersType
 }
 
@@ -143,7 +123,7 @@ class OrdersList extends React.Component<IProps, IState> {
     }
 
     render() {
-      const { t, classes } = this.props;
+      const { t } = this.props;
         return (
             <TableContainer component={Paper}>
                 <Table aria-label="simple table">
@@ -168,7 +148,7 @@ class OrdersList extends React.Component<IProps, IState> {
                         <TableCell align="center">{row.round}</TableCell>
                         <TableCell align="center">
                           {this.props.OrdersType == OrdersType.user ? 
-                            <Button size="large" variant="contained" style={{backgroundColor: 'red', color: '#FFFFFF'}} onClick={() => this.deleteOrder(row.orderId)}>{"Remove"}</Button>
+                            <Button size="large" variant="contained" color="error" onClick={() => this.deleteOrder(row.orderId)}>{"Remove"}</Button>
                           : ""}
                         </TableCell>
                     </TableRow>
@@ -180,5 +160,4 @@ class OrdersList extends React.Component<IProps, IState> {
     }
 }
 
-const translatedOrders = withTranslation('')(OrdersList);
-export default withStyles(styles)(translatedOrders);
+export default withTranslation('')(OrdersList);

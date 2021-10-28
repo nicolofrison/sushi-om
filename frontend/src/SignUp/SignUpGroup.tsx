@@ -2,11 +2,11 @@ import React from 'react';
 
 import {withTranslation, WithTranslation} from "react-i18next";
 
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import { createStyles, withStyles } from '@mui/material/styles';
 
 import translations from '../Utils/TranslationKeys';
 import AuthPost from '../Interfaces/AuthPost.interface';
@@ -32,7 +32,7 @@ const styles = (theme: any) => createStyles({
   },
 });
 
-interface IProps extends WithStyles<typeof styles>, WithTranslation {
+interface IProps extends WithTranslation {
   SetGroupName: React.Dispatch<React.SetStateAction<string>>,
   SetGroupPassword: React.Dispatch<React.SetStateAction<string>>,
   SetFormType: React.Dispatch<React.SetStateAction<SignUpFormType>>,
@@ -77,13 +77,13 @@ class SignUpGroup extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { t, classes } = this.props;
+    const { t } = this.props;
     return (
       <div>
         <Typography component="h1" variant="h5">
           Sign up - group info
         </Typography>
-        <form className={classes.form} noValidate>
+        <form noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -112,10 +112,10 @@ class SignUpGroup extends React.Component<IProps, IState> {
               />
             </Grid>
             <Grid item xs={6}>
-              <Button size="large" variant="contained" color="primary" onClick={this.handleFormType.bind(this, SignUpFormType.create)} className={classes.submit}>{t(translations.createGroup)}</Button>
+              <Button size="large" variant="contained" color="primary" onClick={this.handleFormType.bind(this, SignUpFormType.create)}>{t(translations.createGroup)}</Button>
             </Grid>
             <Grid item xs={6}>
-              <Button size="large" variant="contained" color="primary" onClick={this.handleFormType.bind(this, SignUpFormType.join)} className={classes.submit}>{t(translations.joinGroup)}</Button>
+              <Button size="large" variant="contained" color="primary" onClick={this.handleFormType.bind(this, SignUpFormType.join)}>{t(translations.joinGroup)}</Button>
             </Grid>
           </Grid>
         </form>
@@ -124,5 +124,4 @@ class SignUpGroup extends React.Component<IProps, IState> {
   }
 }
 
-const translatedSignUpGroup = withTranslation('')(SignUpGroup);
-export default withStyles(styles)(translatedSignUpGroup);
+export default withTranslation('')(SignUpGroup);

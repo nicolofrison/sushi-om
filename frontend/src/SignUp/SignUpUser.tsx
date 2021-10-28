@@ -2,34 +2,14 @@ import React from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import { makeStyles } from '@mui/material/styles';
 
 import translations from '../Utils/TranslationKeys';
 import { SignUpStep } from '../Utils/Enums';
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
 
 interface IProps {
   SetFirstName: React.Dispatch<React.SetStateAction<string>>,
@@ -39,7 +19,6 @@ interface IProps {
 }
 
 export default function SignUpUser(props: IProps) {
-  const classes = useStyles();
   const { t } = useTranslation();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +55,7 @@ export default function SignUpUser(props: IProps) {
       <Typography component="h1" variant="h5">
         Sign up - user info
       </Typography>
-      <form className={classes.form} noValidate onSubmit={handleSubmit}>
+      <form noValidate onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -120,7 +99,6 @@ export default function SignUpUser(props: IProps) {
           fullWidth
           variant="contained"
           color="primary"
-          className={classes.submit}
         >
           {t(translations.continue)}
         </Button>
