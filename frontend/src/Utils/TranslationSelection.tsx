@@ -2,8 +2,6 @@ import React from 'react';
 
 import {useTranslation} from "react-i18next";
 
-import { createStyles, makeStyles, Theme } from '@mui/material/styles';
-
 import { InputLabel, Select, MenuItem, FormControl } from '@mui/material';
 
 export default function TranslationSelection()

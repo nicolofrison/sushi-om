@@ -1,46 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import {WithTranslation, withTranslation, useTranslation} from "react-i18next";
+import {WithTranslation, withTranslation} from "react-i18next";
 
-import { withStyles, createStyles } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 
 import translations from '../Utils/TranslationKeys';
 import OrderService from '../services/order.service';
-import { createMuiTheme, Grid, makeStyles, TextField, Theme, ThemeProvider } from '@mui/material';
+import { TextField } from '@mui/material';
 import OrderPost from '../Interfaces/OrderPost.interface';
-import User from '../Interfaces/User.interface';
-import { OrdersType } from '../Utils/Enums';
-import OrdersList from './OrdersList';
 import UserUtils from '../Utils/UserUtils';
 
-const styles = (theme: any) => createStyles({
-    paper: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(3),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-    },
-  });
-  
 interface IProps extends WithTranslation {
     updateOrders: () => void
 }

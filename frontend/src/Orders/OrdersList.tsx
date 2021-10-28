@@ -2,7 +2,6 @@ import React from 'react';
 
 import {WithTranslation, withTranslation} from "react-i18next";
 
-import { withStyles, createStyles } from '@mui/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,15 +10,16 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 
 import translations from '../Utils/TranslationKeys';
 import OrderService from '../services/order.service';
-import { TextField } from '@mui/material';
-import OrderPost from '../Interfaces/OrderPost.interface';
-import User from '../Interfaces/User.interface';
+
 import { OrdersType } from '../Utils/Enums';
 import UserUtils from '../Utils/UserUtils';
 import AddOrder from './AddOrder';
+import EditOrder from './EditOrder';
+import { ToFirstCapitalLetter } from '../Utils/Utils';
 
 interface IProps extends WithTranslation {
   OrdersType: OrdersType
@@ -27,8 +27,7 @@ interface IProps extends WithTranslation {
 
 interface IState {
   orders: any[],
-  code: string,
-  amount: number
+  editingOrderId: number | null
 }
 
 class OrdersList extends React.Component<IProps, IState> {
@@ -37,8 +36,7 @@ class OrdersList extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       orders: [],
-      code: "",
-      amount: 0
+      editingOrderId: null
     };
   }
 
@@ -47,7 +45,7 @@ class OrdersList extends React.Component<IProps, IState> {
     }
 
     componentDidUpdate(prevProps: IProps) {
-      if(this.props.OrdersType != prevProps.OrdersType)
+      if(this.props.OrdersType !== prevProps.OrdersType)
       {
         this.updateOrders();
       }
@@ -60,8 +58,8 @@ class OrdersList extends React.Component<IProps, IState> {
         return;
       }
 
-      const userId = this.props.OrdersType == OrdersType.user ? user.userId : -1;
-      const groupId = this.props.OrdersType == OrdersType.group ? user.groupId : -1;
+      const userId = this.props.OrdersType === OrdersType.user ? user.userId : -1;
+      const groupId = this.props.OrdersType === OrdersType.group ? user.groupId : -1;
 
       OrderService.getOrders(user.accessToken, groupId, userId)
       .then(res => {
@@ -98,30 +96,6 @@ class OrdersList extends React.Component<IProps, IState> {
       }
     }
 
-    addOrder() {
-      const orderPost: OrderPost = {
-        code: this.state.code,
-        amount: +this.state.amount
-      };
-
-      console.log(this.state.amount);
-
-      const user: User | null = UserUtils.getUser();
-      if (user == null) {
-        window.location.reload();
-        return;
-      }
-
-      OrderService.addOrder(user.accessToken, orderPost)
-      .then(res => {
-        console.log(res.data);
-
-        this.setState({code: "", amount: 0});
-
-        this.updateOrders();
-      });
-    }
-
     render() {
       const { t } = this.props;
         return (
@@ -130,25 +104,36 @@ class OrdersList extends React.Component<IProps, IState> {
                 <TableHead>
                     <TableRow>
                       <TableCell />
-                    <TableCell align="center">Code</TableCell>
-                    <TableCell align="center">Amount</TableCell>
-                    <TableCell align="center">Round</TableCell>
-                    <TableCell align="center">Actions{/*Users*/}</TableCell>
+                    <TableCell align="center">{ToFirstCapitalLetter(t(translations.code))}</TableCell>
+                    <TableCell align="center">{ToFirstCapitalLetter(t(translations.amount))}</TableCell>
+                    <TableCell align="center">{ToFirstCapitalLetter(t(translations.round))}</TableCell>
+                    <TableCell align="center">{ToFirstCapitalLetter(t(translations.actions))/*Users*/}</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {this.props.OrdersType == OrdersType.user ? <AddOrder updateOrders={this.updateOrders.bind(this)} /> : ""}
+                    {this.props.OrdersType === OrdersType.user ? <AddOrder updateOrders={this.updateOrders.bind(this)} /> : ""}
                     {this.state.orders.map((row) => (
-                    <TableRow key={row.code}>
+                    <TableRow key={row.orderId}>
                         <TableCell component="th" scope="row">
-                        
+                          
                         </TableCell>
                         <TableCell align="center">{row.code}</TableCell>
-                        <TableCell align="center">{row.amount}</TableCell>
+                        <TableCell align="center">
+                        {this.props.OrdersType === OrdersType.user ?
+                          <EditOrder orderId={row.orderId} amount={row.amount} updateOrders={this.updateOrders.bind(this)} />
+                          : row.amount }
+                        </TableCell>
                         <TableCell align="center">{row.round}</TableCell>
                         <TableCell align="center">
-                          {this.props.OrdersType == OrdersType.user ? 
-                            <Button size="large" variant="contained" color="error" onClick={() => this.deleteOrder(row.orderId)}>{"Remove"}</Button>
+                          {this.props.OrdersType === OrdersType.user ?
+                            <Grid container spacing={2}>
+                              <Grid item xs={6}>
+                                <Button size="large" variant="contained" color="warning" onClick={() => this.setState.bind(this, row.orderId)}>{"Edit"}</Button>
+                              </Grid> 
+                              <Grid item xs={6}>
+                                <Button size="large" variant="contained" color="error" onClick={() => this.deleteOrder(row.orderId)}>{"Remove"}</Button>
+                              </Grid> 
+                            </Grid>
                           : ""}
                         </TableCell>
                     </TableRow>

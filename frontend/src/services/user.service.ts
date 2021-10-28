@@ -1,9 +1,8 @@
 import axios from 'axios';
 
 import AuthPost from '../Interfaces/AuthPost.interface';
-import User from '../Interfaces/User.interface';
 
-const baseUrl = "http://localhost:5000/";
+const baseUrl = "http://192.168.1.74:5000/";
 
 export class UserService {
     private static instance: UserService;

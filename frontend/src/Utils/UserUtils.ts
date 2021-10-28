@@ -1,6 +1,5 @@
 import User from "../Interfaces/User.interface";
 
-
 export default class UserUtils {
 
     public static getUser(): User | null {

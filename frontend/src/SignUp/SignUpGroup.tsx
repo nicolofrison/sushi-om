@@ -6,31 +6,9 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { createStyles, withStyles } from '@mui/material/styles';
 
 import translations from '../Utils/TranslationKeys';
-import AuthPost from '../Interfaces/AuthPost.interface';
 import { SignUpFormType, SignUpStep } from '../Utils/Enums';
-
-const styles = (theme: any) => createStyles({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-});
 
 interface IProps extends WithTranslation {
   SetGroupName: React.Dispatch<React.SetStateAction<string>>,
@@ -95,7 +73,7 @@ class SignUpGroup extends React.Component<IProps, IState> {
                 id="groupName"
                 label={t(translations.groupName)}
                 autoFocus
-                onChange={this.handleInputChange.bind(this)}
+                type=""
               />
             </Grid>
             <Grid item xs={12}>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import OrderPost from '../Interfaces/OrderPost.interface';
 
-const baseUrl = "http://localhost:5000/";
+const baseUrl = "http://192.168.1.74:5000/";
 
 export class OrderService {
     private static instance: OrderService;
@@ -36,6 +36,10 @@ export class OrderService {
 
     public deleteOrder(token: string, orderId: number) {
         return axios.delete(`${baseUrl}orders/${orderId}`, this.config(token));
+    }
+
+    public updateOrder(token: string, orderId: number, newAmount: number) {
+        return axios.put(`${baseUrl}orders/${orderId}`, {amount: newAmount}, this.config(token));
     }
 }
 

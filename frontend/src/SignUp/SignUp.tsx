@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -7,7 +6,6 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 
 import SignUpUser from './SignUpUser';
@@ -59,9 +57,10 @@ export default function SignUp() {
   };
 
   useEffect(() => {
-      if (step == SignUpStep.submit) {
+      if (step === SignUpStep.submit) {
         handleSubmit();
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
   
   return (

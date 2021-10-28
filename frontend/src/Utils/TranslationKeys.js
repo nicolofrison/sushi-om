@@ -1,4 +1,4 @@
-export default {
+const translations = {
     firstName: "firstName",
     lastName: "lastName",
     username: "username",
@@ -15,5 +15,9 @@ export default {
     add: "add",
     usersOrders: "usersOrders",
     groupOrders: "groupOrders",
-    allConfirmedOrders: "allConfirmedOrders"
+    allConfirmedOrders: "allConfirmedOrders",
+    subtract: "subtract",
+    round: "round"
 };
+
+export default translations;
