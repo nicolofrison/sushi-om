@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 
 import {WithTranslation, withTranslation, useTranslation} from "react-i18next";
 
-import { withStyles, createStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+import { withStyles, createStyles } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 
 import translations from '../Utils/TranslationKeys';
 import OrderService from '../services/order.service';
-import { createMuiTheme, Grid, makeStyles, TextField, Theme, ThemeProvider, WithStyles } from '@material-ui/core';
+import { createMuiTheme, Grid, makeStyles, TextField, Theme, ThemeProvider } from '@mui/material';
 import OrderPost from '../Interfaces/OrderPost.interface';
 import User from '../Interfaces/User.interface';
 import { OrdersType } from '../Utils/Enums';
@@ -41,7 +41,7 @@ const styles = (theme: any) => createStyles({
     },
   });
   
-interface IProps extends WithStyles<typeof styles>, WithTranslation {
+interface IProps extends WithTranslation {
     updateOrders: () => void
 }
 
@@ -96,7 +96,7 @@ class AddOrder extends React.Component<IProps, IState> {
           }
       
           render() {
-            const { t, classes } = this.props;
+            const { t } = this.props;
             return (
                 <TableRow key="add">
                 <TableCell />
@@ -131,13 +131,12 @@ class AddOrder extends React.Component<IProps, IState> {
                 </TableCell>
                 <TableCell />
                 <TableCell align="center">
-                    <Button size="large" variant="contained" color="primary" onClick={this.addOrder.bind(this)} className={classes.submit}>{t(translations.add)}</Button>
+                    <Button size="large" variant="contained" color="primary" onClick={this.addOrder.bind(this)}>{t(translations.add)}</Button>
                 </TableCell>
                 </TableRow>
             );
           }
       }
       
-      const translatedOrders = withTranslation('')(AddOrder);
-      export default withStyles(styles)(translatedOrders);
+export default withTranslation('')(AddOrder);
   
