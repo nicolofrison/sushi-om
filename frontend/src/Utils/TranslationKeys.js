@@ -13,7 +13,7 @@ const translations = {
     actions: "actions",
     remove: "remove",
     add: "add",
-    usersOrders: "usersOrders",
+    userOrders: "userOrders",
     groupOrders: "groupOrders",
     allConfirmedOrders: "allConfirmedOrders",
     subtract: "subtract",

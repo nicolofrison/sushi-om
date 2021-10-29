@@ -6,5 +6,16 @@
     "joinGroup": "join group",
     "groupName": "group name",
     "groupPassword": "group password",
-    "continue": "continue"
+    "continue": "continue",
+    "code": "code",
+    "amount": "amount`",
+    "users": "users",
+    "actions": "actions",
+    "remove": "remove",
+    "add": "add",
+    "userOrders": "user orders",
+    "groupOrders": "group orders",
+    "allConfirmedOrders": "confirmed orders",
+    "subtract": "subtract",
+    "round": "round"
 }

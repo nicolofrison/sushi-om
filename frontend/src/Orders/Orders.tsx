@@ -16,7 +16,7 @@ export default function Orders() {
   return (
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <Button size="large" disabled={ordersType === OrdersType.user} variant={ordersType === OrdersType.user ? "outlined" : "contained"} color="primary" onClick={() => setOrdersType(OrdersType.user)}>{t(translations.usersOrders)}</Button>
+          <Button size="large" disabled={ordersType === OrdersType.user} variant={ordersType === OrdersType.user ? "outlined" : "contained"} color="primary" onClick={() => setOrdersType(OrdersType.user)}>{t(translations.userOrders)}</Button>
         </Grid>
         <Grid item xs={4}>
           <Button size="large" disabled={ordersType === OrdersType.group} variant={ordersType === OrdersType.group ? "outlined" : "contained"} color="primary" onClick={() => setOrdersType(OrdersType.group)}>{t(translations.groupOrders)}</Button>

@@ -6,5 +6,16 @@
     "joinGroup": "unisciti al gruppo",
     "groupName": "nome gruppo",
     "groupPassword": "password gruppo",
-    "continue": "continua"
+    "continue": "continua",
+    "code": "codice",
+    "amount": "quantita`",
+    "users": "utenti",
+    "actions": "azioni",
+    "remove": "rimuovi",
+    "add": "aggiungi",
+    "userOrders": "ordini utente",
+    "groupOrders": "ordini gruppo",
+    "allConfirmedOrders": "ordini confermati",
+    "subtract": "sottrai",
+    "round": "giro"
 }
