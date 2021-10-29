@@ -73,7 +73,7 @@ class SignUpGroup extends React.Component<IProps, IState> {
                 id="groupName"
                 label={t(translations.groupName)}
                 autoFocus
-                type=""
+                onChange={this.handleInputChange.bind(this)}
               />
             </Grid>
             <Grid item xs={12}>
