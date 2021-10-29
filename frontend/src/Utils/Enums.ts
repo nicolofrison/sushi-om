@@ -15,3 +15,10 @@ export enum OrdersType {
   group,  // 
   all // all confirmed orders
 }
+
+export enum AlertType {
+  info = "info",
+  success = "success",
+  warning = "warning",
+  error = "error",
+}

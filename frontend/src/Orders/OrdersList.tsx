@@ -15,11 +15,12 @@ import Grid from '@mui/material/Grid';
 import translations from '../Utils/TranslationKeys';
 import OrderService from '../services/order.service';
 
-import { OrdersType } from '../Utils/Enums';
+import { AlertType, OrdersType } from '../Utils/Enums';
 import UserUtils from '../Utils/UserUtils';
 import AddOrder from './AddOrder';
 import EditOrder from './EditOrder';
-import { ToFirstCapitalLetter } from '../Utils/Utils';
+import { handleError, ToFirstCapitalLetter } from '../Utils/Utils';
+import alertService from '../services/alert.service';
 
 interface IProps extends WithTranslation {
   OrdersType: OrdersType
@@ -66,7 +67,8 @@ class OrdersList extends React.Component<IProps, IState> {
         this.setState({orders: res.data as any[]});
 
         console.log(res.data);
-      });
+      })
+      .catch(handleError);
     }
 
     deleteOrder(orderId: number) {
@@ -79,9 +81,10 @@ class OrdersList extends React.Component<IProps, IState> {
       OrderService.deleteOrder(accessToken, orderId)
       .then(res => {
         console.log(res.data);
+        alertService.showAlert("Order deleted successfully", AlertType.error);
 
         this.updateOrders();
-      })
+      });
     }
 
     handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {

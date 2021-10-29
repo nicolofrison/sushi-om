@@ -15,6 +15,8 @@ import AuthPost from '../Interfaces/AuthPost.interface';
 import User from '../Interfaces/User.interface';
 import UserService from '../services/user.service';
 import UserUtils from '../Utils/UserUtils';
+import { handleError } from '../Utils/Utils';
+import { AxiosError } from 'axios';
 
 function Copyright() {
   return (
@@ -53,6 +55,11 @@ export default function SignUp() {
         console.log(res.data);
 
         UserUtils.setUser(res.data as User);
+      })
+      .catch((error: Error | AxiosError) => {
+        handleError(error);
+
+        setStep(SignUpStep.user);
       });
   };
 

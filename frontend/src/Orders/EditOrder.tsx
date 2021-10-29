@@ -8,6 +8,9 @@ import { withTranslation, WithTranslation } from 'react-i18next';
 import translations from '../Utils/TranslationKeys';
 import OrderService from '../services/order.service';
 import UserUtils from '../Utils/UserUtils';
+import { handleError } from '../Utils/Utils';
+import alertService from '../services/alert.service';
+import { AlertType } from '../Utils/Enums';
 
 interface IProps extends WithTranslation {
     amount: number,
@@ -21,7 +24,7 @@ interface IState {
 }
 
 class EditOrder extends React.Component<IProps, IState> {
-    
+
     constructor(props: IProps) {
         super(props);
         this.state = {
@@ -52,9 +55,11 @@ class EditOrder extends React.Component<IProps, IState> {
         OrderService.updateOrder(token, orderId, newAmount)
         .then(res => {
           console.debug(res.data);
-  
+          alertService.showAlert("Order updated successfully", AlertType.success);
+
           this.props.updateOrders();
-        });
+        })
+        .catch(handleError);
     }
 
     updateAmount(amountDiff: number) {
@@ -70,7 +75,7 @@ class EditOrder extends React.Component<IProps, IState> {
 
     handleAmountChange(event: React.ChangeEvent<HTMLInputElement>) {
         const target = event.target;
-        if (target != null) {    
+        if (target != null) {
           this.setState({
             amount: +target.value
           } as unknown as IState);

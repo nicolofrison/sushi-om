@@ -11,6 +11,9 @@ import OrderService from '../services/order.service';
 import { TextField } from '@mui/material';
 import OrderPost from '../Interfaces/OrderPost.interface';
 import UserUtils from '../Utils/UserUtils';
+import { handleError } from '../Utils/Utils';
+import alertService from '../services/alert.service';
+import { AlertType } from '../Utils/Enums';
 
 interface IProps extends WithTranslation {
     updateOrders: () => void
@@ -59,11 +62,13 @@ class AddOrder extends React.Component<IProps, IState> {
             OrderService.addOrder(accessToken, orderPost)
             .then(res => {
               console.log(res.data);
+              alertService.showAlert("Order added successfully", AlertType.success);
       
               this.setState({code: "", amount: 0});
       
               this.props.updateOrders();
-            });
+            })
+            .catch(handleError);
           }
       
           render() {
