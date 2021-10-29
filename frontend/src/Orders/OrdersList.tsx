@@ -88,7 +88,7 @@ class OrdersList extends React.Component<IProps, IState> {
       OrderService.deleteOrder(accessToken, orderId)
       .then(res => {
         console.log(res.data);
-        alertService.showAlert("Order deleted successfully", AlertType.error);
+        alertService.showAlert(translations.orderRemovedSuccessfully, AlertType.error);
 
         this.updateOrders();
       });
@@ -107,6 +107,8 @@ class OrdersList extends React.Component<IProps, IState> {
     }
 
     tableContent() {
+      const { t } = this.props;
+
       return this.state.orders.map((row) => (
         <TableRow key={row.orderId}>
             <TableCell component="th" scope="row">
@@ -121,7 +123,7 @@ class OrdersList extends React.Component<IProps, IState> {
             <TableCell align="center">{row.round}</TableCell>
             <TableCell align="center">
               {this.props.OrdersType === OrdersType.user ?
-                    <Button size="large" variant="contained" color="error" onClick={() => this.deleteOrder(row.orderId)}>{"Remove"}</Button>
+                    <Button size="large" variant="contained" color="error" onClick={() => this.deleteOrder(row.orderId)}>{t(translations.remove)}</Button>
               : ""}
             </TableCell>
         </TableRow>

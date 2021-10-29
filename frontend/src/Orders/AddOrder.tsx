@@ -62,7 +62,7 @@ class AddOrder extends React.Component<IProps, IState> {
             OrderService.addOrder(accessToken, orderPost)
             .then(res => {
               console.log(res.data);
-              alertService.showAlert("Order added successfully", AlertType.success);
+              alertService.showAlert(translations.orderAddedSuccessfully, AlertType.success);
       
               this.setState({code: "", amount: 0});
       

@@ -10,7 +10,9 @@ export function handleError(error: Error | AxiosError) {
     if (axios.isAxiosError(error))  {
         // Access to config, request, and response
         console.error(error);
-        AlertService.showAlert((error.response as any)?.data?.message ?? error.message, AlertType.error);
+
+        const errorResponse = (error.response as any);
+        AlertService.showAlert(errorResponse.data?.translationKey ?? errorResponse.data?.message ?? error.message, AlertType.error);
     } else {
         // Just a stock error
         console.error(error);

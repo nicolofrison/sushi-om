@@ -17,5 +17,16 @@
     "groupOrders": "ordini gruppo",
     "allConfirmedOrders": "ordini confermati",
     "subtract": "sottrai",
-    "round": "giro"
+    "round": "giro",
+    "expiredAuthenticationToken": "La sessione e` scaduta",
+    "authenticationError": "Errore di autenticazione",
+    "missingOrWrongAuthenticationToken": "Autenticazione errata o mancante",
+    "wrongAuthenticationToken": "Autenticazione errata",
+    "info": "info",
+    "success": "successo",
+    "warning": "avviso",
+    "error": "errore",
+    "orderAddedSuccessfully": "Ordine aggiunto con successo",
+    "orderEditedSuccessfully": "Ordine modificato con successo",
+    "orderRemovedSuccessfully": "Ordine rimosso con successo"
 }

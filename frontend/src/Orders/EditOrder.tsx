@@ -55,7 +55,7 @@ class EditOrder extends React.Component<IProps, IState> {
         OrderService.updateOrder(token, orderId, newAmount)
         .then(res => {
           console.debug(res.data);
-          alertService.showAlert("Order updated successfully", AlertType.success);
+          alertService.showAlert(translations.orderEditedSuccessfully, AlertType.success);
 
           this.props.updateOrders();
         })

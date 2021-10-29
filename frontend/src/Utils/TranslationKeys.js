@@ -17,7 +17,18 @@ const translations = {
     groupOrders: "groupOrders",
     allConfirmedOrders: "allConfirmedOrders",
     subtract: "subtract",
-    round: "round"
+    round: "round",
+    expiredAuthenticationToken: "expiredAuthenticationToken",
+    authenticationError: "authenticationError",
+    missingOrWrongAuthenticationToken: "missingOrWrongAuthenticationToken",
+    wrongAuthenticationToken: "wrongAuthenticationToken",
+    info: "info",
+    success: "success",
+    warning: "warning",
+    error: "error",
+    orderAddedSuccessfully: "orderAddedSuccessfully",
+    orderEditedSuccessfully: "orderEditedSuccessfully",
+    orderRemovedSuccessfully: "orderRemovedSuccessfully"
 };
 
 export default translations;
