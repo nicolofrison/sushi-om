@@ -1,10 +1,9 @@
 import axios from 'axios';
 
 import AuthPost from '../Interfaces/AuthPost.interface';
+import BaseService from './base.service';
 
-const baseUrl = "http://192.168.1.74:5000/";
-
-export class UserService {
+export class UserService extends BaseService {
     private static instance: UserService;
 
     public static getInstance() {
@@ -16,7 +15,15 @@ export class UserService {
     }
 
     public signUp(authPost: AuthPost) {
-        return axios.post(baseUrl + "auth/register", authPost);
+        return axios.post(this.baseUrl + "auth/register", authPost);
+    }
+
+    public getUser(token: string, userId: number) {
+        return axios.get(this.baseUrl + "users/" + userId, this.config(token));
+    }
+
+    public updateUserConfirmation(token: string, userId: number, confirmed: boolean) {
+        return axios.patch(this.baseUrl + "users/" + userId, {confirmed}, this.config(token));
     }
 }
 

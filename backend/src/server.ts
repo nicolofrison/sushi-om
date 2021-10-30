@@ -8,6 +8,7 @@ import config from "./ormconfig";
 
 import AuthenticationController from "./controllers/authentication.controller";
 import OrdersController from "./controllers/orders.controller";
+import UsersController from "./controllers/users.controller";
 
 validateEnv();
 
@@ -18,7 +19,7 @@ validateEnv();
     console.error("Error while connecting to the database", error);
     return error;
   }
-  const app = new App([new AuthenticationController(), new OrdersController()]);
+  const app = new App([new AuthenticationController(), new OrdersController(), new UsersController()]);
   app.listen();
 
   return null;

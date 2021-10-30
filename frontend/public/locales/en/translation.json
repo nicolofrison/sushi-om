@@ -28,5 +28,6 @@
     "error": "error",
     "orderAddedSuccessfully": "Order added successfully",
     "orderEditedSuccessfully": "Order edited successfully",
-    "orderRemovedSuccessfully": "Order removed successfully"
+    "orderRemovedSuccessfully": "Order removed successfully",
+    "confirm": "confirm"
 }

@@ -55,6 +55,7 @@ export default function SignUp() {
         console.log(res.data);
 
         UserUtils.setUser(res.data as User);
+        window.location.reload();
       })
       .catch((error: Error | AxiosError) => {
         handleError(error);
