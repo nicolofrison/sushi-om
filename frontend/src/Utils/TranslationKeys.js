@@ -29,7 +29,8 @@ const translations = {
     orderAddedSuccessfully: "orderAddedSuccessfully",
     orderEditedSuccessfully: "orderEditedSuccessfully",
     orderRemovedSuccessfully: "orderRemovedSuccessfully",
-    confirm: "confirm"
+    confirm: "confirm",
+    checked: "checked"
 };
 
 export default translations;

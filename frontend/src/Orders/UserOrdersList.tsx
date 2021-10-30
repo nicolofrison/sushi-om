@@ -2,23 +2,23 @@ import React from 'react';
 
 import {withTranslation} from "react-i18next";
 
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 
 import translations from '../Utils/TranslationKeys';
 import OrderService from '../services/order.service';
 import UserService from '../services/user.service';
 
-import { AlertType, OrdersType } from '../Utils/Enums';
+import { AlertType } from '../Utils/Enums';
 import UserUtils from '../Utils/UserUtils';
 import AddOrder from './AddOrder';
 import EditOrder from './EditOrder';
@@ -27,15 +27,13 @@ import alertService from '../services/alert.service';
 import User from '../Interfaces/User.interface';
 import { IOrdersListProps, IOrdersListState, OrdersList } from './OrdersList';
 
-interface IGenericOrdersListProps extends IOrdersListProps {
-  OrdersType: OrdersType
-}
+interface IGenericOrdersListProps extends IOrdersListProps { }
 
 interface IGenericOrdersListState extends IOrdersListState {
   confirmed: boolean
 }
 
-class GenericOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrdersListState> {
+class UserOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrdersListState> {
 
   constructor(props: IGenericOrdersListProps) {
     super(props);
@@ -54,16 +52,8 @@ class GenericOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrde
   }
 
     componentDidMount() {
-      super.componentDidMount();
+      this.updateOrders();
       this.updateConfirmed();
-    }
-
-    componentDidUpdate(prevProps: IGenericOrdersListProps) {
-      if(this.props.OrdersType !== prevProps.OrdersType)
-      {
-        this.updateOrders();
-        this.updateConfirmed();
-      }
     }
 
     updateOrders() {
@@ -73,10 +63,7 @@ class GenericOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrde
         return;
       }
 
-      const userId = this.props.OrdersType === OrdersType.user ? user.userId : -1;
-      const groupId = this.props.OrdersType === OrdersType.group ? user.groupId : -1;
-
-      super.updateOrders(userId, groupId);
+      super.updateOrders(user.userId);
     }
 
     updateConfirmed() {
@@ -141,8 +128,7 @@ class GenericOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrde
     orderRow(row: any) {
       const { t } = this.props;
 
-      const notConfirmedUsersOrders = this.props.OrdersType === OrdersType.user 
-        && isNullOrUndefined(row.round) 
+      const notConfirmedUsersOrders = isNullOrUndefined(row.round) 
         && !this.state.confirmed;
 
       return <TableRow key={row.orderId}>
@@ -178,9 +164,7 @@ class GenericOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrde
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {this.props.OrdersType === OrdersType.user
-                    && <AddOrder updateOrders={this.updateOrders.bind(this)} ordersConfirmed={this.state.confirmed} />
-                  }
+                  <AddOrder updateOrders={this.updateOrders.bind(this)} ordersConfirmed={this.state.confirmed} />
                   {this.state.isLoading
                     ? <TableRow><TableCell colSpan={5} align="center"><CircularProgress /></TableCell></TableRow>
                     : this.state.orders.map((row) => this.orderRow(row))
@@ -193,7 +177,7 @@ class GenericOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrde
 
     render() {
       const { t } = this.props;
-      const bottomBarHeight = this.props.OrdersType === OrdersType.user ? '50px' : 0;
+      const bottomBarHeight = '50px';
         return (
             <React.Fragment>
               <Paper square sx={{ pb: bottomBarHeight }}>
@@ -209,4 +193,4 @@ class GenericOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrde
     }
 }
 
-export default withTranslation('')(GenericOrdersList);
+export default withTranslation('')(UserOrdersList);

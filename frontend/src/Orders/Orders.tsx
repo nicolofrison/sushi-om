@@ -7,11 +7,16 @@ import Button from '@mui/material/Button';
 import translations from '../Utils/TranslationKeys';
 import { Grid } from '@mui/material';
 import { OrdersType } from '../Utils/Enums';
-import GenericOrdersList from './GenericOrdersList';
+import UserOrdersList from './UserOrdersList';
+import GroupOrdersList from './GroupOrdersList';
 
 export default function Orders() {
   const { t } = useTranslation();
   const [ordersType, setOrdersType] = useState(OrdersType.user);
+
+  const ordersList = ordersType === OrdersType.user
+    ? <UserOrdersList />
+    : <GroupOrdersList OrdersType={ordersType} />
 
   return (
       <Grid container spacing={2}>
@@ -25,7 +30,7 @@ export default function Orders() {
           <Button size="large" disabled={ordersType === OrdersType.all} variant={ordersType === OrdersType.all ? "outlined" : "contained"} color="primary" onClick={() => setOrdersType(OrdersType.all)}>{t(translations.allConfirmedOrders)}</Button>
         </Grid>
         <Grid item xs={12}>
-          <GenericOrdersList OrdersType={ordersType} />
+          {ordersList}
         </Grid>
       </Grid>
       );
