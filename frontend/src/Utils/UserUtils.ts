@@ -38,6 +38,5 @@ export default class UserUtils {
 
     public static setUser(user: User) {
         localStorage.setItem("user", JSON.stringify(user));
-        window.location.reload();
     }
 }

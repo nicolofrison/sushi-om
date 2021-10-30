@@ -16,7 +16,8 @@ import alertService from '../services/alert.service';
 import { AlertType } from '../Utils/Enums';
 
 interface IProps extends WithTranslation {
-    updateOrders: () => void
+    updateOrders: () => void,
+    ordersConfirmed: boolean
 }
 
 interface IState {
@@ -76,12 +77,14 @@ class AddOrder extends React.Component<IProps, IState> {
             return (
                 <TableRow key="add">
                 <TableCell />
+                <TableCell />
                 <TableCell align="center">
                     <TextField
                         autoComplete="code"
                         name="code"
                         variant="outlined"
                         required
+                        disabled={this.props.ordersConfirmed}
                         id="code"
                         label={t(translations.code)}
                         autoFocus
@@ -96,6 +99,7 @@ class AddOrder extends React.Component<IProps, IState> {
                             name="amount"
                             variant="outlined"
                             required
+                            disabled={this.props.ordersConfirmed}
                             fullWidth
                             id="amount"
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
@@ -105,9 +109,8 @@ class AddOrder extends React.Component<IProps, IState> {
                             value={this.state.amount}
                             />
                 </TableCell>
-                <TableCell />
                 <TableCell align="center">
-                    <Button size="large" variant="contained" color="primary" onClick={this.addOrder.bind(this)}>{t(translations.add)}</Button>
+                    <Button size="large" disabled={this.props.ordersConfirmed} variant="contained" color="primary" onClick={this.addOrder.bind(this)}>{t(translations.add)}</Button>
                 </TableCell>
                 </TableRow>
             );

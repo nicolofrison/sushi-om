@@ -28,7 +28,8 @@ const translations = {
     error: "error",
     orderAddedSuccessfully: "orderAddedSuccessfully",
     orderEditedSuccessfully: "orderEditedSuccessfully",
-    orderRemovedSuccessfully: "orderRemovedSuccessfully"
+    orderRemovedSuccessfully: "orderRemovedSuccessfully",
+    confirm: "confirm"
 };
 
 export default translations;
