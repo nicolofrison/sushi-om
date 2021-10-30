@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import translations from '../Utils/TranslationKeys';
 import { Grid } from '@mui/material';
 import { OrdersType } from '../Utils/Enums';
-import OrdersList from './OrdersList';
+import GenericOrdersList from './GenericOrdersList';
 
 export default function Orders() {
   const { t } = useTranslation();
@@ -25,7 +25,7 @@ export default function Orders() {
           <Button size="large" disabled={ordersType === OrdersType.all} variant={ordersType === OrdersType.all ? "outlined" : "contained"} color="primary" onClick={() => setOrdersType(OrdersType.all)}>{t(translations.allConfirmedOrders)}</Button>
         </Grid>
         <Grid item xs={12}>
-          <OrdersList OrdersType={ordersType} />
+          <GenericOrdersList OrdersType={ordersType} />
         </Grid>
       </Grid>
       );
