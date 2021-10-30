@@ -35,12 +35,26 @@ class UsersController implements Controller {
   private initializeRoutes() {
     this.router
       .all(`${this.path}/:id`, authMiddleware)
+      .get(
+        `${this.path}/:id`,
+        param("id").isInt().custom(this.queryUserIdMiddleware),
+        this.getUser
+      )
       .patch(
         `${this.path}/:id`,
         param("id").isInt().custom(this.queryUserIdMiddleware),
         validationMiddleware(UserPatch),
         this.updateUser
       );
+  }
+
+  private getUser = async (
+    request: RequestWithUser,
+    response: express.Response,
+    next: express.NextFunction
+  ) => {
+    response.status(200);
+    response.json(request.user);
   }
 
   private updateUser = async (
