@@ -9,14 +9,24 @@ import { Grid } from '@mui/material';
 import { OrdersType } from '../Utils/Enums';
 import UserOrdersList from './UserOrdersList';
 import GroupOrdersList from './GroupOrdersList';
+import ConfirmedOrdersList from './ConfirmedOrdersList';
 
 export default function Orders() {
   const { t } = useTranslation();
   const [ordersType, setOrdersType] = useState(OrdersType.user);
 
-  const ordersList = ordersType === OrdersType.user
-    ? <UserOrdersList />
-    : <GroupOrdersList OrdersType={ordersType} />
+  let ordersList: JSX.Element = <UserOrdersList />;
+  switch (ordersType) {
+    case OrdersType.user:
+      ordersList = <UserOrdersList />;
+      break;
+    case OrdersType.group:
+      ordersList = <GroupOrdersList />;
+      break;
+    case OrdersType.all:
+      ordersList = <ConfirmedOrdersList />;
+      break;
+  }
 
   return (
       <Grid container spacing={2}>

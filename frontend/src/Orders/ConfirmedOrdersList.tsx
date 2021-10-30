@@ -19,17 +19,16 @@ import TableRow from '@mui/material/TableRow';
 import translations from '../Utils/TranslationKeys';
 import OrderService from '../services/order.service';
 
-import { OrdersType } from '../Utils/Enums';
 import UserUtils from '../Utils/UserUtils';
 import { handleError, ToFirstCapitalLetter } from '../Utils/Utils';
 import { AxiosError } from 'axios';
 import { IOrdersListProps, IOrdersListState, OrdersList } from './OrdersList';
 
-interface IGroupOrdersListState extends IOrdersListState {
-    expandedUser: string
+interface IConfirmedOrdersListState extends IOrdersListState {
+    expandedCode: string
 }
 
-class UserOrdersList extends OrdersList<IOrdersListProps, IGroupOrdersListState> {
+class ConfirmedOrdersList extends OrdersList<IOrdersListProps, IConfirmedOrdersListState> {
 
   constructor(props: IOrdersListProps) {
     super(props);
@@ -43,7 +42,7 @@ class UserOrdersList extends OrdersList<IOrdersListProps, IGroupOrdersListState>
     this.state = {
       orders: [],
       isLoading: false,
-      expandedUser: ""
+      expandedCode: ""
     };
   }
 
@@ -74,45 +73,64 @@ class UserOrdersList extends OrdersList<IOrdersListProps, IGroupOrdersListState>
     });
   }
 
-  usersList() {
+  codesList() {
+    const { t } = this.props;
+
     if (this.state.orders.length === 0) {
       return;
     }
 
-    const usersList: any[] = [];
+    // group orders by code
+    const codesList: any[] = [];
     this.state.orders.forEach(o => {
-      const key = o.username ?? o.name + " " + o.surname;
-      usersList[key] = [...usersList[key] || [], o];
+      const key = o.code;
+      codesList[key] = [...codesList[key] || [], o];
     });
 
-    return Object.entries(usersList).map((userRow: any) => this.userRow(userRow));
-  }
-
-  handleSelectedUserRowChange = (username: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    this.setState({expandedUser: newExpanded ? username : ""});
-  }
-
-  userRow(userRow: any) {
-    // the username or the combination of user's firstName and lastName
-    const username: string = userRow[0];
-    const userOrders = userRow[1];
-
-    return <Accordion expanded={this.state.expandedUser === username} onChange={this.handleSelectedUserRowChange(username)}>
-      <AccordionSummary aria-controls={username.replaceAll(" ", "_") + "-content"} id={username.replaceAll(" ", "_") + "-header"}>
+    return <Box>
         <Grid container spacing={2}>
-          <Grid item xs={2}>true</Grid>
-          <Grid item xs={10} textAlign="left">
-            {username}
+            <Grid item xs={2} color="black">{t(ToFirstCapitalLetter(translations.checked))}</Grid>
+            <Grid item xs={5} color="black">{t(ToFirstCapitalLetter(translations.code))}</Grid>
+            <Grid item xs={5} color="black">{t(ToFirstCapitalLetter(translations.amount))}</Grid>
+        </Grid>
+        {Object.entries(codesList).map((codeRow: any) => this.codeRow(codeRow))}
+    </Box>
+  }
+
+  handleSelectedUserRowChange = (code: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    this.setState({expandedCode: newExpanded ? code : ""});
+  }
+
+  codeRow(codeRow: any) {
+    // the username or the combination of user's firstName and lastName
+    const code = codeRow[0];
+    // The orders of the users with the same code
+    const usersOrders = codeRow[1];
+    let codeTotalAmount = 0;
+    usersOrders.forEach((o: any) => {
+        codeTotalAmount += o.amount;
+    });
+    console.log(codeTotalAmount);
+
+    return <Accordion expanded={this.state.expandedCode === code} onChange={this.handleSelectedUserRowChange(code)}>
+      <AccordionSummary aria-controls={code + "-content"} id={code + "-header"}>
+        <Grid container spacing={2}>
+          <Grid item xs={2}></Grid>
+          <Grid item xs={5}>
+            {code}
+          </Grid>
+          <Grid item xs={5}>
+            {codeTotalAmount}
           </Grid>
         </Grid>
       </AccordionSummary>
       <AccordionDetails>
-        {this.userOrders(userOrders)}
+        {this.usersOrders(usersOrders)}
       </AccordionDetails>
     </Accordion>;
   }
 
-  userOrders(userOrders: any[]) {
+  usersOrders(usersOrders: any[]) {
     const { t } = this.props;
 
     return <TableContainer component={Paper}>
@@ -121,22 +139,22 @@ class UserOrdersList extends OrdersList<IOrdersListProps, IGroupOrdersListState>
             <TableRow>
               <TableCell />
             <TableCell align="center">{ToFirstCapitalLetter(t(translations.round))}</TableCell>
-            <TableCell align="center">{ToFirstCapitalLetter(t(translations.code))}</TableCell>
+            <TableCell align="center">{ToFirstCapitalLetter(t(translations.username))}</TableCell>
             <TableCell align="center">{ToFirstCapitalLetter(t(translations.amount))}</TableCell>
             </TableRow>
         </TableHead>
         <TableBody>
-          {userOrders.map((userOrder: any) => this.orderRow(userOrder))}
+          {usersOrders.map((userOrder: any) => this.userOrderRow(userOrder))}
         </TableBody>
         </Table>
     </TableContainer>
   }
 
-  orderRow(row: any) {
+  userOrderRow(row: any) {
     return <TableRow key={row.orderId}>
       <TableCell component="th" scope="row" />
       <TableCell align="center">{row.round}</TableCell>
-      <TableCell align="center">{row.code}</TableCell>
+      <TableCell align="center">{row.username ?? row.name + " " + row.surname}</TableCell>
       <TableCell align="center">{row.amount}</TableCell>
     </TableRow>;
   }
@@ -144,7 +162,7 @@ class UserOrdersList extends OrdersList<IOrdersListProps, IGroupOrdersListState>
   render() {
     const content = this.state.isLoading
       ? <CircularProgress />
-      : this.usersList();
+      : this.codesList();
 
     return <Box justifyContent="center">
       {content}
@@ -152,4 +170,4 @@ class UserOrdersList extends OrdersList<IOrdersListProps, IGroupOrdersListState>
   }
 }
 
-export default withTranslation('')(UserOrdersList);
+export default withTranslation('')(ConfirmedOrdersList);
