@@ -36,7 +36,7 @@ export default class User {
   @Column({
     default: false,
   })
-  public confirmed?: boolean;
+  public confirmed: boolean;
 
   constructor(
     name: string,
