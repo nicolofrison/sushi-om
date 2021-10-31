@@ -2,7 +2,6 @@
 import * as express from "express";
 import Controller from "../interfaces/controller.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
-import { TokenData } from "../interfaces/jwt.interface";
 import AuthPost from "../interfaces/auth.interface";
 import AuthenticationService from "../services/authentication.service";
 import AuthenticationUtils from "../utils/authentication";
@@ -10,6 +9,7 @@ import GroupAlreadyExistsException from "../exceptions/GroupAlreadyExistsExcepti
 import GroupDoesNotExistsOrWrongPasswordException from "../exceptions/GroupDoesNotExistsOrWrongPasswordException";
 import UserAlreadyExistsInTheGroupException from "../exceptions/UserAlreadyExistsInTheGroupException";
 import HttpError from "../httpErrors/HttpError";
+import ServerHttpError from "../httpErrors/ServerHttpError";
 
 class AuthenticationController implements Controller {
   public path = "/auth";
@@ -61,7 +61,7 @@ class AuthenticationController implements Controller {
         next(new HttpError(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpError(500, "Internal server error", "internalServerError"));
+        next(new ServerHttpError());
       }
     }
   };

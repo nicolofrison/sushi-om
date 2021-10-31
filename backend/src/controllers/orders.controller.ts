@@ -12,6 +12,7 @@ import OrderAmountPatch from "../interfaces/OrderAmountPatch.interface";
 import OrderAlreadyConfirmedException from "../exceptions/OrderAlreadyConfirmedException";
 import OrderDoesNotExistsException from "../exceptions/OrderDoesNotExistsException";
 import GroupDoesNotExistsException from "../exceptions/GroupDoesNotExistsException";
+import ServerHttpError from "../httpErrors/ServerHttpError";
 
 class OrdersController implements Controller {
   public path = "/orders";
@@ -84,7 +85,7 @@ class OrdersController implements Controller {
       }
     } catch (e) {
       console.error(e);
-      next(new HttpError(500, "Internal server error", "internalServerError"));
+      next(new ServerHttpError());
     }
   };
 
@@ -115,7 +116,7 @@ class OrdersController implements Controller {
         next(new HttpError(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpError(500, "Internal server error", "internalServerError"));
+        next(new ServerHttpError());
       }
     }
   };
@@ -140,7 +141,7 @@ class OrdersController implements Controller {
       response.json(orders);
     } catch (e) {
       console.error(e);
-      next(new HttpError(500, "Internal server error", "internalServerError"));
+      next(new ServerHttpError());
     }
   };
 
@@ -163,7 +164,7 @@ class OrdersController implements Controller {
         next(new HttpError(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpError(500, "Internal server error", "internalServerError"));
+        next(new ServerHttpError());
       }
     }
   };
@@ -193,7 +194,7 @@ class OrdersController implements Controller {
         next(new HttpError(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpError(500, "Internal server error", "internalServerError"));
+        next(new ServerHttpError());
       }
     }
   };

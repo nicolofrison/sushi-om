@@ -9,6 +9,7 @@ import RequestWithUser from "../interfaces/requestWithUser.interface";
 import UserPatch from "../interfaces/UserPatch.interface";
 import UserDoesNotExistsException from "../exceptions/UserDoesNotExistsException";
 import UsersService from "../services/users.service";
+import ServerHttpError from "../httpErrors/ServerHttpError";
 
 class UsersController implements Controller {
   public path = "/users";
@@ -82,7 +83,7 @@ class UsersController implements Controller {
         next(new HttpError(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpError(500, "Internal server error", "internalServerError"));
+        next(new ServerHttpError());
       }
     }
   };
