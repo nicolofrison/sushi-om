@@ -1,5 +1,7 @@
-export default class OrderDoesNotExistsException extends Error {
+import ExtendedError from "./ExtendedError";
+
+export default class OrderDoesNotExistsException extends ExtendedError {
   constructor() {
-    super("The order does not exists");
+    super("The order does not exists", "orderDoesNotExists");
   }
 }
