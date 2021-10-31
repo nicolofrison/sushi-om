@@ -29,5 +29,7 @@
     "orderAddedSuccessfully": "Ordine aggiunto con successo",
     "orderEditedSuccessfully": "Ordine modificato con successo",
     "orderRemovedSuccessfully": "Ordine rimosso con successo",
-    "confirm": "conferma"
+    "confirm": "conferma",
+    "checked": "spuntato",
+    "ordersEmpty": "Non ci sono ancora ordini presenti"
 }
