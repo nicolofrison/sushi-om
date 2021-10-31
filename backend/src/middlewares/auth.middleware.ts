@@ -3,9 +3,9 @@ import * as jwt from "jsonwebtoken";
 import { getCustomRepository } from "typeorm";
 import UserRepository from "../repositories/user.repository";
 import {
-  AuthenticationException,
-  AuthenticationExceptionType,
-} from "../exceptions/AuthenticationExceptions";
+  AuthenticationHttpError,
+  AuthenticationHttpErrorType,
+} from "../exceptions/AuthenticationHttpError";
 import { DataStoredInToken } from "../interfaces/jwt.interface";
 import RequestWithUser from "../interfaces/requestWithUser.interface";
 
@@ -31,8 +31,8 @@ async function authMiddleware(
         next();
       } else {
         next(
-          new AuthenticationException(
-            AuthenticationExceptionType.WrongAuthenticationToken
+          new AuthenticationHttpError(
+            AuthenticationHttpErrorType.WrongAuthenticationToken
           )
         );
       }
@@ -43,19 +43,19 @@ async function authMiddleware(
         console.error(jwtError.name);
         console.error(jwtError.message);
         if (jwtError.name === "TokenExpiredError") {
-          next(new AuthenticationException(AuthenticationExceptionType.ExpiredAuthenticationToken));
+          next(new AuthenticationHttpError(AuthenticationHttpErrorType.ExpiredAuthenticationToken));
         } else {
-          next(new AuthenticationException(AuthenticationExceptionType.WrongAuthenticationToken));
+          next(new AuthenticationHttpError(AuthenticationHttpErrorType.WrongAuthenticationToken));
         }
       } else {
         next(
-          new AuthenticationException(AuthenticationExceptionType.General)
+          new AuthenticationHttpError(AuthenticationHttpErrorType.General)
         );
       }
     }
   } else {
     next(
-      new AuthenticationException(AuthenticationExceptionType.MissingOrWrongAuthenticationToken)
+      new AuthenticationHttpError(AuthenticationHttpErrorType.MissingOrWrongAuthenticationToken)
     );
   }
 }
