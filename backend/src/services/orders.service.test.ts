@@ -5,7 +5,7 @@ import OrderAlreadyConfirmedException from "../exceptions/OrderAlreadyConfirmedE
 import OrderDoesNotExistsException from "../exceptions/OrderDoesNotExistsException";
 import OrderPost from "../interfaces/orderPost.interface";
 import OrdersService from "./orders.service";
-import OrderPut from "../interfaces/orderPut.interface";
+import OrderAmountPatch from "../interfaces/OrderAmountPatch.interface";
 import OrderRepository from "../repositories/order.repository";
 
 (typeorm as any).getRepository = jest.fn();
@@ -101,7 +101,7 @@ describe("The OrderService", () => {
     describe("update an order", () => {
       const orderId = 1;
       const userId = 1;
-      const orderPut: OrderPut = {
+      const orderPut: OrderAmountPatch = {
         amount: 2,
       };
 
@@ -145,7 +145,7 @@ describe("The OrderService", () => {
     describe("update a not existent order", () => {
       const orderId = 1;
       const userId = 1;
-      const orderPut: OrderPut = {
+      const orderPut: OrderAmountPatch = {
         amount: 2,
       };
 
@@ -170,7 +170,7 @@ describe("The OrderService", () => {
     describe("update an order with a different user", () => {
       const orderId = 1;
       const userId = 1;
-      const orderPut: OrderPut = {
+      const orderPut: OrderAmountPatch = {
         amount: 2,
       };
 
@@ -202,7 +202,7 @@ describe("The OrderService", () => {
     describe("update an already confirmed order", () => {
       const orderId = 1;
       const userId = 1;
-      const orderPut: OrderPut = {
+      const orderPut: OrderAmountPatch = {
         amount: 2,
       };
 

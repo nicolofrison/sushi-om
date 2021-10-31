@@ -4,7 +4,7 @@ import OrderDoesNotExistsException from "../exceptions/OrderDoesNotExistsExcepti
 import OrderUserViewRepository from "../repositories/orderUserView.repository";
 import OrderRepository from "../repositories/order.repository";
 import OrderPost from "../interfaces/orderPost.interface";
-import OrderPut from "../interfaces/orderPut.interface";
+import OrderAmountPatch from "../interfaces/OrderAmountPatch.interface";
 
 class OrdersService {
   private orderRepo = getCustomRepository(OrderRepository);
@@ -60,7 +60,7 @@ class OrdersService {
   public updateOrder = async (
     orderId: number,
     userId: number,
-    orderPut: OrderPut
+    orderPut: OrderAmountPatch
   ) => {
     // find if the "userId" inside "order" has already an order with "code" inside "order" and if it is not confirmed
     const alreadyExistentOrder = await this.orderRepo.findByOrderId(orderId);

@@ -8,7 +8,7 @@ import OrdersService from "../services/orders.service";
 import OrderPost from "../interfaces/orderPost.interface";
 import authMiddleware from "../middlewares/auth.middleware";
 import RequestWithUser from "../interfaces/requestWithUser.interface";
-import OrderPut from "../interfaces/orderPut.interface";
+import OrderAmountPatch from "../interfaces/OrderAmountPatch.interface";
 import OrderAlreadyConfirmedException from "../exceptions/OrderAlreadyConfirmedException";
 import OrderDoesNotExistsException from "../exceptions/OrderDoesNotExistsException";
 import GroupDoesNotExistsException from "../exceptions/GroupDoesNotExistsException";
@@ -57,10 +57,10 @@ class OrdersController implements Controller {
       .get(`${this.path}/:id`, param("id").isInt(), this.getOrder)
       .delete(`${this.path}/:id`, param("id").isInt(), this.deleteOrder)
       .post(`${this.path}`, validationMiddleware(OrderPost), this.createOrder)
-      .put(
+      .patch(
         `${this.path}/:id`,
         param("id").isInt(),
-        validationMiddleware(OrderPut),
+        validationMiddleware(OrderAmountPatch),
         this.updateOrder
       );
   }
@@ -94,7 +94,7 @@ class OrdersController implements Controller {
     next: express.NextFunction
   ) => {
     const orderId = parseInt(request.params.id, 10);
-    const orderData: OrderPut = request.body;
+    const orderData: OrderAmountPatch = request.body;
 
     try {
       const updatedOrder = await this.orderService.updateOrder(
