@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import ExtendedHttpException from "exceptions/ExtendedHttpException";
 import { NextFunction, Request, Response } from "express";
+
 import HttpException from "../exceptions/HttpException";
 
 /**
@@ -20,11 +20,7 @@ function errorMiddleware(
   const message = error.message || "Something went wrong";
   let translationKey;
 
-  const extendedHttpException = error as ExtendedHttpException;
-  if (extendedHttpException) {
-    translationKey = extendedHttpException.translationKey;
-  }
-  translationKey ??= "";
+  translationKey = error.translationKey;
 
   response.status(status).json({
     status,

@@ -58,10 +58,10 @@ class AuthenticationController implements Controller {
         e instanceof GroupDoesNotExistsOrWrongPasswordException ||
         e instanceof UserAlreadyExistsInTheGroupException
       ) {
-        next(new HttpException(400, e.message));
+        next(new HttpException(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpException(500, "Internal server error"));
+        next(new HttpException(500, "Internal server error", "internalServerError"));
       }
     }
   };

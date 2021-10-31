@@ -79,10 +79,10 @@ class UsersController implements Controller {
       if (
         e instanceof UserDoesNotExistsException
       ) {
-        next(new HttpException(400, e.message));
+        next(new HttpException(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpException(500, "Internal server error"));
+        next(new HttpException(500, "Internal server error", "internalServerError"));
       }
     }
   };

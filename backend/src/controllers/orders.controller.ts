@@ -84,7 +84,7 @@ class OrdersController implements Controller {
       }
     } catch (e) {
       console.error(e);
-      next(new HttpException(500, "Internal server error"));
+      next(new HttpException(500, "Internal server error", "internalServerError"));
     }
   };
 
@@ -112,10 +112,10 @@ class OrdersController implements Controller {
         e instanceof OrderAlreadyConfirmedException ||
         e instanceof OrderDoesNotExistsException
       ) {
-        next(new HttpException(400, e.message));
+        next(new HttpException(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpException(500, "Internal server error"));
+        next(new HttpException(500, "Internal server error", "internalServerError"));
       }
     }
   };
@@ -140,7 +140,7 @@ class OrdersController implements Controller {
       response.json(orders);
     } catch (e) {
       console.error(e);
-      next(new HttpException(500, "Internal server error"));
+      next(new HttpException(500, "Internal server error", "internalServerError"));
     }
   };
 
@@ -160,10 +160,10 @@ class OrdersController implements Controller {
       );
     } catch (e) {
       if (e instanceof OrderDoesNotExistsException) {
-        next(new HttpException(400, e.message));
+        next(new HttpException(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpException(500, "Internal server error"));
+        next(new HttpException(500, "Internal server error", "internalServerError"));
       }
     }
   };
@@ -190,10 +190,10 @@ class OrdersController implements Controller {
         e instanceof OrderAlreadyConfirmedException ||
         e instanceof OrderDoesNotExistsException
       ) {
-        next(new HttpException(400, e.message));
+        next(new HttpException(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpException(500, "Internal server error"));
+        next(new HttpException(500, "Internal server error", "internalServerError"));
       }
     }
   };

@@ -17,7 +17,7 @@ function validationMiddleware(type: any): express.RequestHandler {
         const message = errors
           .map((error: ValidationError) => Object.values(error.constraints))
           .join(", ");
-        next(new HttpException(400, message));
+        next(new HttpException(400, message, ""));
       } else {
         next();
       }
