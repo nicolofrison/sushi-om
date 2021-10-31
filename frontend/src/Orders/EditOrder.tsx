@@ -52,7 +52,7 @@ class EditOrder extends React.Component<IProps, IState> {
             return;
         }
 
-        OrderService.updateOrder(token, orderId, newAmount)
+        OrderService.updateOrderAmount(token, orderId, newAmount)
         .then(res => {
           console.debug(res.data);
           alertService.showAlert(translations.orderEditedSuccessfully, AlertType.success);
