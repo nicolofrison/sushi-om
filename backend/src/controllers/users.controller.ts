@@ -3,7 +3,7 @@ import * as express from "express";
 import { Meta, param } from "express-validator";
 import Controller from "../interfaces/controller.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
-import HttpError from "../exceptions/HttpError";
+import HttpError from "../httpErrors/HttpError";
 import authMiddleware from "../middlewares/auth.middleware";
 import RequestWithUser from "../interfaces/requestWithUser.interface";
 import UserPatch from "../interfaces/UserPatch.interface";

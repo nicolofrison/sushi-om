@@ -1,7 +1,7 @@
 import { plainToClass } from "class-transformer"; // used to convert the request body into a class
 import { validate, ValidationError } from "class-validator"; // used to check if the conversion from request body to class is not successfull and manage that situation
 import * as express from "express";
-import HttpError from "../exceptions/HttpError";
+import HttpError from "../httpErrors/HttpError";
 
 /**
  * Validations middleware that checks if the request body corrispond to the "type" class furnished as parameter

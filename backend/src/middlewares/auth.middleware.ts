@@ -5,7 +5,7 @@ import UserRepository from "../repositories/user.repository";
 import {
   AuthenticationHttpError,
   AuthenticationHttpErrorType,
-} from "../exceptions/AuthenticationHttpError";
+} from "../httpErrors/AuthenticationHttpError";
 import { DataStoredInToken } from "../interfaces/jwt.interface";
 import RequestWithUser from "../interfaces/requestWithUser.interface";
 

@@ -9,7 +9,7 @@ import AuthenticationUtils from "../utils/authentication";
 import GroupAlreadyExistsException from "../exceptions/GroupAlreadyExistsException";
 import GroupDoesNotExistsOrWrongPasswordException from "../exceptions/GroupDoesNotExistsOrWrongPasswordException";
 import UserAlreadyExistsInTheGroupException from "../exceptions/UserAlreadyExistsInTheGroupException";
-import HttpError from "../exceptions/HttpError";
+import HttpError from "../httpErrors/HttpError";
 
 class AuthenticationController implements Controller {
   public path = "/auth";
