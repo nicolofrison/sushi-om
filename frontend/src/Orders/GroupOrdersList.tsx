@@ -62,7 +62,7 @@ class UserOrdersList extends OrdersList<IOrdersListProps, IGroupOrdersListState>
 
     OrderService.getOrders(user.accessToken, groupId, -1)
     .then(res => {
-      this.setState({orders: res.data as any[], isLoading: false});
+      this.setState({orders: (res.data as any[]).filter(o => o.round), isLoading: false});
 
       console.log(res.data);
     })
@@ -77,7 +77,7 @@ class UserOrdersList extends OrdersList<IOrdersListProps, IGroupOrdersListState>
     const { t } = this.props;
 
     if (this.state.orders.length === 0) {
-      return;
+      return ToFirstCapitalLetter(t(translations.ordersEmpty));
     }
 
     const usersList: any[] = [];

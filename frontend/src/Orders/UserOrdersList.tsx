@@ -151,28 +151,33 @@ class UserOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrdersL
 
     ordersTable() {
       const { t } = this.props;
-        return (
-            <TableContainer component={Paper}>
-              <Table aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell />
-                  <TableCell align="center">{ToFirstCapitalLetter(t(translations.round))}</TableCell>
-                  <TableCell align="center">{ToFirstCapitalLetter(t(translations.code))}</TableCell>
-                  <TableCell align="center">{ToFirstCapitalLetter(t(translations.amount))}</TableCell>
-                  <TableCell align="center">{ToFirstCapitalLetter(t(translations.actions))/*Users*/}</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <AddOrder updateOrders={this.updateOrders.bind(this)} ordersConfirmed={this.state.confirmed} />
-                  {this.state.isLoading
-                    ? <TableRow><TableCell colSpan={5} align="center"><CircularProgress /></TableCell></TableRow>
-                    : this.state.orders.map((row) => this.orderRow(row))
-                  }
-                </TableBody>
-              </Table>
-            </TableContainer>
-            );
+        
+      if (this.state.orders.length === 0) {
+        return ToFirstCapitalLetter(t(translations.ordersEmpty));
+      }
+
+      return (
+        <TableContainer component={Paper}>
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell />
+              <TableCell align="center">{ToFirstCapitalLetter(t(translations.round))}</TableCell>
+              <TableCell align="center">{ToFirstCapitalLetter(t(translations.code))}</TableCell>
+              <TableCell align="center">{ToFirstCapitalLetter(t(translations.amount))}</TableCell>
+              <TableCell align="center">{ToFirstCapitalLetter(t(translations.actions))/*Users*/}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <AddOrder updateOrders={this.updateOrders.bind(this)} ordersConfirmed={this.state.confirmed} />
+              {this.state.isLoading
+                ? <TableRow><TableCell colSpan={5} align="center"><CircularProgress /></TableCell></TableRow>
+                : this.state.orders.map((row) => this.orderRow(row))
+              }
+            </TableBody>
+          </Table>
+        </TableContainer>
+        );
     }
 
     render() {

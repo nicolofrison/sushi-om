@@ -30,7 +30,8 @@ const translations = {
     orderEditedSuccessfully: "orderEditedSuccessfully",
     orderRemovedSuccessfully: "orderRemovedSuccessfully",
     confirm: "confirm",
-    checked: "checked"
+    checked: "checked",
+    ordersEmpty: "ordersEmpty"
 };
 
 export default translations;

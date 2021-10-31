@@ -30,5 +30,6 @@
     "orderEditedSuccessfully": "Order edited successfully",
     "orderRemovedSuccessfully": "Order removed successfully",
     "confirm": "confirm",
-    "checked": "checked"
+    "checked": "checked",
+    "ordersEmpty": "There aren't orders yet"
 }
