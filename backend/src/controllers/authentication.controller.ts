@@ -9,7 +9,7 @@ import AuthenticationUtils from "../utils/authentication";
 import GroupAlreadyExistsException from "../exceptions/GroupAlreadyExistsException";
 import GroupDoesNotExistsOrWrongPasswordException from "../exceptions/GroupDoesNotExistsOrWrongPasswordException";
 import UserAlreadyExistsInTheGroupException from "../exceptions/UserAlreadyExistsInTheGroupException";
-import HttpException from "../exceptions/HttpException";
+import HttpError from "../exceptions/HttpError";
 
 class AuthenticationController implements Controller {
   public path = "/auth";
@@ -58,10 +58,10 @@ class AuthenticationController implements Controller {
         e instanceof GroupDoesNotExistsOrWrongPasswordException ||
         e instanceof UserAlreadyExistsInTheGroupException
       ) {
-        next(new HttpException(400, e.message, e.translationKey));
+        next(new HttpError(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpException(500, "Internal server error", "internalServerError"));
+        next(new HttpError(500, "Internal server error", "internalServerError"));
       }
     }
   };

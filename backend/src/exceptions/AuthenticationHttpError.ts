@@ -1,4 +1,4 @@
-import HttpException from "./HttpException";
+import HttpError from "./HttpError";
 
 export enum AuthenticationHttpErrorType {
   General,
@@ -7,7 +7,7 @@ export enum AuthenticationHttpErrorType {
   ExpiredAuthenticationToken
 }
 
-export class AuthenticationHttpError extends HttpException {
+export class AuthenticationHttpError extends HttpError {
   constructor(type: AuthenticationHttpErrorType) {
     switch (type) {
       case AuthenticationHttpErrorType.ExpiredAuthenticationToken:

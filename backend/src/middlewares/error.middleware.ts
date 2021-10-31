@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextFunction, Request, Response } from "express";
 
-import HttpException from "../exceptions/HttpException";
+import HttpError from "../exceptions/HttpError";
 
 /**
  * Errors middleware to call after the initialization of the controllers called only if exception passed to "next" function in the cycle steps before this one
@@ -11,7 +11,7 @@ import HttpException from "../exceptions/HttpException";
  * @param next
  */
 function errorMiddleware(
-  error: HttpException,
+  error: HttpError,
   request: Request,
   response: Response,
   next: NextFunction
