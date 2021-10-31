@@ -31,5 +31,13 @@
     "orderRemovedSuccessfully": "Order removed successfully",
     "confirm": "confirm",
     "checked": "checked",
-    "ordersEmpty": "There aren't orders yet"
+    "ordersEmpty": "There aren't orders yet",
+    "groupAlreadyExists": "The group already exists",
+    "groupDoesNotExists": "The group does not exists",
+    "groupDoesNotExistsOrWrongPassword": "The group does not exists or the password is wrong",
+    "orderAlreadyConfirmedCannotEdit": "The order is already confirmed, it cannot be edited",
+    "orderDoesNotExists": "The order does not exists",
+    "userAlreadyExistsInGroup": "The user already exists in the group",
+    "userDoesNotExists": "The user does not exists",
+    "internalServerError": "Internal server error"
 }
