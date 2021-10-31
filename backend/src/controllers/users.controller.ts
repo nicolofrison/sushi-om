@@ -3,12 +3,13 @@ import * as express from "express";
 import { Meta, param } from "express-validator";
 import Controller from "../interfaces/controller.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
-import HttpException from "../exceptions/HttpException";
+import HttpError from "../httpErrors/HttpError";
 import authMiddleware from "../middlewares/auth.middleware";
 import RequestWithUser from "../interfaces/requestWithUser.interface";
 import UserPatch from "../interfaces/UserPatch.interface";
 import UserDoesNotExistsException from "../exceptions/UserDoesNotExistsException";
 import UsersService from "../services/users.service";
+import ServerHttpError from "../httpErrors/ServerHttpError";
 
 class UsersController implements Controller {
   public path = "/users";
@@ -79,10 +80,10 @@ class UsersController implements Controller {
       if (
         e instanceof UserDoesNotExistsException
       ) {
-        next(new HttpException(400, e.message));
+        next(new HttpError(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpException(500, "Internal server error"));
+        next(new ServerHttpError());
       }
     }
   };

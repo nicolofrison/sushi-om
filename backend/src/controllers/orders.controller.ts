@@ -3,7 +3,7 @@ import * as express from "express";
 import { Meta, param, query } from "express-validator";
 import Controller from "../interfaces/controller.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
-import HttpException from "../exceptions/HttpException";
+import HttpError from "../httpErrors/HttpError";
 import OrdersService from "../services/orders.service";
 import OrderPost from "../interfaces/orderPost.interface";
 import authMiddleware from "../middlewares/auth.middleware";
@@ -12,6 +12,7 @@ import OrderAmountPatch from "../interfaces/OrderAmountPatch.interface";
 import OrderAlreadyConfirmedException from "../exceptions/OrderAlreadyConfirmedException";
 import OrderDoesNotExistsException from "../exceptions/OrderDoesNotExistsException";
 import GroupDoesNotExistsException from "../exceptions/GroupDoesNotExistsException";
+import ServerHttpError from "../httpErrors/ServerHttpError";
 
 class OrdersController implements Controller {
   public path = "/orders";
@@ -84,7 +85,7 @@ class OrdersController implements Controller {
       }
     } catch (e) {
       console.error(e);
-      next(new HttpException(500, "Internal server error"));
+      next(new ServerHttpError());
     }
   };
 
@@ -112,10 +113,10 @@ class OrdersController implements Controller {
         e instanceof OrderAlreadyConfirmedException ||
         e instanceof OrderDoesNotExistsException
       ) {
-        next(new HttpException(400, e.message));
+        next(new HttpError(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpException(500, "Internal server error"));
+        next(new ServerHttpError());
       }
     }
   };
@@ -140,7 +141,7 @@ class OrdersController implements Controller {
       response.json(orders);
     } catch (e) {
       console.error(e);
-      next(new HttpException(500, "Internal server error"));
+      next(new ServerHttpError());
     }
   };
 
@@ -160,10 +161,10 @@ class OrdersController implements Controller {
       );
     } catch (e) {
       if (e instanceof OrderDoesNotExistsException) {
-        next(new HttpException(400, e.message));
+        next(new HttpError(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpException(500, "Internal server error"));
+        next(new ServerHttpError());
       }
     }
   };
@@ -190,10 +191,10 @@ class OrdersController implements Controller {
         e instanceof OrderAlreadyConfirmedException ||
         e instanceof OrderDoesNotExistsException
       ) {
-        next(new HttpException(400, e.message));
+        next(new HttpError(400, e.message, e.translationKey));
       } else {
         console.error(e);
-        next(new HttpException(500, "Internal server error"));
+        next(new ServerHttpError());
       }
     }
   };

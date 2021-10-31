@@ -1,5 +1,7 @@
-export default class GroupAlreadyExistsException extends Error {
+import ExtendedError from "./ExtendedError";
+
+export default class GroupAlreadyExistsException extends ExtendedError {
   constructor() {
-    super("The group already exists");
+    super("The group already exists", "groupAlreadyExists");
   }
 }

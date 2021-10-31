@@ -1,25 +1,25 @@
-import ExtendedHttpException from "./ExtendedHttpException";
+import HttpError from "./HttpError";
 
-export enum AuthenticationExceptionType {
+export enum AuthenticationHttpErrorType {
   General,
   WrongAuthenticationToken,
   MissingOrWrongAuthenticationToken,
   ExpiredAuthenticationToken
 }
 
-export class AuthenticationException extends ExtendedHttpException {
-  constructor(type: AuthenticationExceptionType) {
+export class AuthenticationHttpError extends HttpError {
+  constructor(type: AuthenticationHttpErrorType) {
     switch (type) {
-      case AuthenticationExceptionType.ExpiredAuthenticationToken:
+      case AuthenticationHttpErrorType.ExpiredAuthenticationToken:
         super(401, "The authentication token is expired","expiredAuthenticationToken");
         break;
-      case AuthenticationExceptionType.General:
+      case AuthenticationHttpErrorType.General:
         super(401, "Authentication error", "authenticationError");
         break;
-      case AuthenticationExceptionType.MissingOrWrongAuthenticationToken:
+      case AuthenticationHttpErrorType.MissingOrWrongAuthenticationToken:
         super(401, "The authentication token is missing or wrong", "missingOrWrongAuthenticationToken");
         break;
-      case AuthenticationExceptionType.WrongAuthenticationToken:
+      case AuthenticationHttpErrorType.WrongAuthenticationToken:
         super(401, "The authentication token is wrong", "wrongAuthenticationToken");
         break;
     }
