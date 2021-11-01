@@ -5,6 +5,8 @@ import OrderUserViewRepository from "../repositories/orderUserView.repository";
 import OrderRepository from "../repositories/order.repository";
 import OrderPost from "../interfaces/orderPost.interface";
 import OrderAmountPatch from "../interfaces/OrderAmountPatch.interface";
+import OrderCheckPatch from "../interfaces/OrderCheckPatch.interface";
+import OrderIsNotConfirmedException from "../exceptions/OrderNotConfirmedYetException";
 
 class OrdersService {
   private orderRepo = getCustomRepository(OrderRepository);
@@ -57,10 +59,10 @@ class OrdersService {
     return order;
   };
 
-  public updateOrder = async (
+  public updateOrderAmount = async (
     orderId: number,
     userId: number,
-    orderPut: OrderAmountPatch
+    orderAmountPatch: OrderAmountPatch
   ) => {
     // find if the "userId" inside "order" has already an order with "code" inside "order" and if it is not confirmed
     const alreadyExistentOrder = await this.orderRepo.findByOrderId(orderId);
@@ -72,7 +74,27 @@ class OrdersService {
       throw new OrderAlreadyConfirmedException();
     }
 
-    alreadyExistentOrder.amount = orderPut.amount;
+    alreadyExistentOrder.amount = orderAmountPatch.amount;
+    const order = await this.orderRepo.save(alreadyExistentOrder);
+    return order;
+  };
+
+  public updateOrderCheck = async (
+    orderId: number,
+    userId: number,
+    orderCheckPatch: OrderCheckPatch 
+  ) => {
+    // find if the "userId" inside "order" has already an order with "code" inside "order" and if it is not confirmed
+    const alreadyExistentOrder = await this.orderRepo.findByOrderId(orderId);
+    if (!alreadyExistentOrder || alreadyExistentOrder.userId !== userId) {
+      throw new OrderDoesNotExistsException();
+    }
+
+    if (!alreadyExistentOrder.round) {
+      throw new OrderIsNotConfirmedException();
+    }
+
+    alreadyExistentOrder.checked = orderCheckPatch.checked;
     const order = await this.orderRepo.save(alreadyExistentOrder);
     return order;
   };

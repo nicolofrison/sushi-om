@@ -4,6 +4,7 @@ import {withTranslation} from "react-i18next";
 
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
 import CircularProgress from '@mui/material/CircularProgress';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -26,6 +27,7 @@ import { handleError, isNullOrUndefined, ToFirstCapitalLetter } from '../Utils/U
 import alertService from '../services/alert.service';
 import User from '../Interfaces/User.interface';
 import { IOrdersListProps, IOrdersListState, OrdersList } from './OrdersList';
+import { AxiosError } from 'axios';
 
 interface IGenericOrdersListProps extends IOrdersListProps { }
 
@@ -92,7 +94,7 @@ class UserOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrdersL
       OrderService.deleteOrder(accessToken, orderId)
       .then(res => {
         console.log(res.data);
-        alertService.showAlert(translations.orderRemovedSuccessfully, AlertType.error);
+        alertService.showAlert(translations.orderRemovedSuccessfully, AlertType.success);
 
         this.updateOrders();
         this.updateConfirmed();
@@ -125,6 +127,36 @@ class UserOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrdersL
       this.setState({confirmed: confirmed});
     }
 
+    handleCheckChange(event: React.ChangeEvent<HTMLInputElement>) {
+      const target = event.target;
+      if (target != null) {
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        
+        const orderId = +(name.split("-")[1]);
+        const accessToken = UserUtils.getToken();
+        if (accessToken == null) {
+          window.location.reload();
+          return;
+        }
+        
+        this.setState({isLoading: true});
+        OrderService.updateOrderChecked(accessToken, orderId, value as boolean)
+        .then(res => {
+          console.log(res.data);
+          alertService.showAlert(translations.orderCheckedSuccessfully, AlertType.success);
+  
+          this.updateOrders();
+          this.updateConfirmed();
+        })
+        .catch((error: Error | AxiosError) => {
+          handleError(error);
+    
+          this.setState({isLoading: false});
+        });
+      }
+    }
+
     orderRow(row: any) {
       const { t } = this.props;
 
@@ -132,8 +164,8 @@ class UserOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrdersL
         && !this.state.confirmed;
 
       return <TableRow key={row.orderId}>
-        <TableCell component="th" scope="row" />
-        <TableCell align="center">{row.round}</TableCell>
+        <TableCell>{row.round && <Checkbox name={"check-" + row.orderId} checked={row.checked} onChange={this.handleCheckChange.bind(this)} />}</TableCell>
+        <TableCell align="center" component="th" scope="row">{row.round}</TableCell>
         <TableCell align="center">{row.code}</TableCell>
         <TableCell align="center">
         {notConfirmedUsersOrders
@@ -151,28 +183,34 @@ class UserOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrdersL
 
     ordersTable() {
       const { t } = this.props;
-        
-      if (this.state.orders.length === 0) {
-        return ToFirstCapitalLetter(t(translations.ordersEmpty));
+
+      let ordersRows =  <TableRow>
+        <TableCell colSpan={5} align="center">{ToFirstCapitalLetter(t(translations.ordersEmpty))}</TableCell>
+      </TableRow>;
+      if (this.state.orders.length > 0) {
+        ordersRows = <React.Fragment>
+          {this.state.orders.map((row) => this.orderRow(row))}
+        </React.Fragment>
       }
 
+        
       return (
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell />
-              <TableCell align="center">{ToFirstCapitalLetter(t(translations.round))}</TableCell>
-              <TableCell align="center">{ToFirstCapitalLetter(t(translations.code))}</TableCell>
-              <TableCell align="center">{ToFirstCapitalLetter(t(translations.amount))}</TableCell>
-              <TableCell align="center">{ToFirstCapitalLetter(t(translations.actions))/*Users*/}</TableCell>
+                <TableCell align="center" width="10%">{ToFirstCapitalLetter(t(translations.checked))}</TableCell>
+                <TableCell align="center" width="10%">{ToFirstCapitalLetter(t(translations.round))}</TableCell>
+                <TableCell align="center" width="10%">{ToFirstCapitalLetter(t(translations.code))}</TableCell>
+                <TableCell align="center">{ToFirstCapitalLetter(t(translations.amount))}</TableCell>
+                <TableCell align="center">{ToFirstCapitalLetter(t(translations.actions))/*Users*/}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <AddOrder updateOrders={this.updateOrders.bind(this)} ordersConfirmed={this.state.confirmed} />
               {this.state.isLoading
                 ? <TableRow><TableCell colSpan={5} align="center"><CircularProgress /></TableCell></TableRow>
-                : this.state.orders.map((row) => this.orderRow(row))
+                : ordersRows
               }
             </TableBody>
           </Table>

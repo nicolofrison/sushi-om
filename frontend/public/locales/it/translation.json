@@ -39,5 +39,7 @@
     "orderDoesNotExists": "L'ordine non esiste",
     "userAlreadyExistsInGroup": "L'utente esiste gia` nel gruppo",
     "userDoesNotExists": "L'utente non esiste",
-    "internalServerError": "Errore interno del server"
+    "internalServerError": "Errore interno del server",
+    "orderIsNotConfirmed": "L'ordine non e` confermato",
+    "orderCheckedSuccessfully": "L'ordine e` stato spuntato con successo"
 }

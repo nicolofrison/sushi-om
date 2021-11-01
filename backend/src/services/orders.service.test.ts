@@ -101,7 +101,7 @@ describe("The OrderService", () => {
     describe("update an order", () => {
       const orderId = 1;
       const userId = 1;
-      const orderPut: OrderAmountPatch = {
+      const orderAmountPatch: OrderAmountPatch = {
         amount: 2,
       };
 
@@ -116,7 +116,7 @@ describe("The OrderService", () => {
         orderId,
         userId,
         code: alreadyExistentOrder.code,
-        amount: orderPut.amount,
+        amount: orderAmountPatch.amount,
       };
 
       const orderRepo = {
@@ -133,10 +133,10 @@ describe("The OrderService", () => {
       const ordersService = new OrdersService();
 
       it("should return the expected order", async () => {
-        const updatedOrder = await ordersService.updateOrder(
+        const updatedOrder = await ordersService.updateOrderAmount(
           orderId,
           userId,
-          orderPut
+          orderAmountPatch
         );
         return expect(updatedOrder).toEqual(expectedOrder);
       });
@@ -145,7 +145,7 @@ describe("The OrderService", () => {
     describe("update a not existent order", () => {
       const orderId = 1;
       const userId = 1;
-      const orderPut: OrderAmountPatch = {
+      const orderAmountPatch: OrderAmountPatch = {
         amount: 2,
       };
 
@@ -163,14 +163,14 @@ describe("The OrderService", () => {
 
       it("should throw the OrderDoesNotExistsException the expected order", () =>
         expect(
-          ordersService.updateOrder(orderId, userId, orderPut)
+          ordersService.updateOrderAmount(orderId, userId, orderAmountPatch)
         ).rejects.toEqual(new OrderDoesNotExistsException()));
     });
 
     describe("update an order with a different user", () => {
       const orderId = 1;
       const userId = 1;
-      const orderPut: OrderAmountPatch = {
+      const orderAmountPatch: OrderAmountPatch = {
         amount: 2,
       };
 
@@ -195,14 +195,14 @@ describe("The OrderService", () => {
 
       it("should throw the OrderDoesNotExistsException", () =>
         expect(
-          ordersService.updateOrder(orderId, userId, orderPut)
+          ordersService.updateOrderAmount(orderId, userId, orderAmountPatch)
         ).rejects.toEqual(new OrderDoesNotExistsException()));
     });
 
     describe("update an already confirmed order", () => {
       const orderId = 1;
       const userId = 1;
-      const orderPut: OrderAmountPatch = {
+      const orderAmountPatch: OrderAmountPatch = {
         amount: 2,
       };
 
@@ -228,7 +228,7 @@ describe("The OrderService", () => {
 
       it("should throw the OrderAlreadyConfirmedException", () =>
         expect(
-          ordersService.updateOrder(orderId, userId, orderPut)
+          ordersService.updateOrderAmount(orderId, userId, orderAmountPatch)
         ).rejects.toEqual(new OrderAlreadyConfirmedException()));
     });
   });

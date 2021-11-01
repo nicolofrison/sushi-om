@@ -39,7 +39,9 @@ const translations = {
     orderDoesNotExists: "orderDoesNotExists",
     userAlreadyExistsInGroup: "userAlreadyExistsInGroup",
     userDoesNotExists: "userDoesNotExists",
-    internalServerError: "internalServerError"
+    internalServerError: "internalServerError",
+    orderIsNotConfirmed: "orderIsNotConfirmed",
+    orderCheckedSuccessfully: "orderCheckedSuccessfully"
 };
 
 export default translations;
