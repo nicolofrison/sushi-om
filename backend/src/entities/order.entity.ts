@@ -20,7 +20,7 @@ export default class Order {
   amount: number;
 
   @Column({default: false})
-  checked?: boolean;
+  checked: boolean;
 
   @Column({ type: "int", nullable: true })
   round?: number;

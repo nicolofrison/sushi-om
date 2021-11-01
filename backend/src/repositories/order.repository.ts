@@ -34,13 +34,11 @@ export default class OrderRepository extends Repository<Order> {
     public updateUsersRound = async (
       usersIds: number[]
     ) => {
-      console.debug(usersIds);
       const rounds = await this.find({
         select: ["round"],
         where: { userId: In(usersIds)}
       });
       let maxRound = 0;
-      console.debug(rounds);
       if (rounds.length > 0 && rounds.map(o => o.round).every(r => r)) {
         maxRound = Math.max(...rounds.map(o => o.round).filter(r => r));
       }

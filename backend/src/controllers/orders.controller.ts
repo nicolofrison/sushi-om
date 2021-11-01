@@ -9,10 +9,13 @@ import OrderPost from "../interfaces/orderPost.interface";
 import authMiddleware from "../middlewares/auth.middleware";
 import RequestWithUser from "../interfaces/requestWithUser.interface";
 import OrderAmountPatch from "../interfaces/OrderAmountPatch.interface";
+import OrderCheckPatch from "../interfaces/orderCheckPatch.interface";
 import OrderAlreadyConfirmedException from "../exceptions/OrderAlreadyConfirmedException";
 import OrderDoesNotExistsException from "../exceptions/OrderDoesNotExistsException";
 import GroupDoesNotExistsException from "../exceptions/GroupDoesNotExistsException";
 import ServerHttpError from "../httpErrors/ServerHttpError";
+import OrderPatch from "../interfaces/OrderPatch.interface";
+import OrderIsNotConfirmedException from "../exceptions/OrderNotConfirmedYetException";
 
 class OrdersController implements Controller {
   public path = "/orders";
@@ -61,9 +64,8 @@ class OrdersController implements Controller {
       .patch(
         `${this.path}/:id`,
         param("id").isInt(),
-        validationMiddleware(OrderAmountPatch),
-        this.updateOrder
-      );
+        validationMiddleware(OrderPatch),
+        this.updateOrder);
   }
 
   private createOrder = async (
@@ -94,24 +96,35 @@ class OrdersController implements Controller {
     response: express.Response,
     next: express.NextFunction
   ) => {
-    const orderId = parseInt(request.params.id, 10);
-    const orderData: OrderAmountPatch = request.body;
+    const orderId = +request.params.id;
+    const orderData: OrderPatch = request.body;
 
     try {
-      const updatedOrder = await this.orderService.updateOrder(
-        orderId,
-        request.user.userId,
-        orderData
-      );
-
+      let updatedOrder = null;
+      if (orderData.amount !== undefined) {
+        updatedOrder = await this.orderService.updateOrderAmount(
+          orderId,
+          request.user.userId,
+          orderData as OrderAmountPatch
+        );
+      } else if (orderData.checked !== undefined) {
+        updatedOrder = await this.orderService.updateOrderCheck(
+          orderId,
+          request.user.userId,
+          orderData as OrderCheckPatch
+        );
+      } else {
+        next(new HttpError(400, "Invalid request data", "invalidRequestData"));
+      }
+      
       if (updatedOrder != null) {
         response.status(200);
         response.json(updatedOrder);
       }
     } catch (e) {
-      if (
-        e instanceof OrderAlreadyConfirmedException ||
-        e instanceof OrderDoesNotExistsException
+      if (e instanceof OrderAlreadyConfirmedException 
+        || e instanceof OrderDoesNotExistsException 
+        || e instanceof OrderIsNotConfirmedException
       ) {
         next(new HttpError(400, e.message, e.translationKey));
       } else {
@@ -150,7 +163,7 @@ class OrdersController implements Controller {
     response: express.Response,
     next: express.NextFunction
   ) => {
-    const orderId = parseInt(request.params.id, 10);
+    const orderId = +request.params.id;
     try {
       response.status(200);
       response.json(
