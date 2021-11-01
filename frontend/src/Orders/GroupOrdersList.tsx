@@ -184,8 +184,8 @@ function OrderRow(props: {userOrder: any}) {
   const { userOrder } = props;
 
   return <TableRow key={userOrder.orderId}>
-    <TableCell component="th" scope="row" />
-    <TableCell align="center">{userOrder.round}</TableCell>
+    <TableCell align="center">{userOrder.checked && <CheckCircleIcon color="success" />}</TableCell>
+    <TableCell align="center" component="th" scope="row">{userOrder.round}</TableCell>
     <TableCell align="center">{userOrder.code}</TableCell>
     <TableCell align="center">{userOrder.amount}</TableCell>
   </TableRow>;

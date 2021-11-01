@@ -28,8 +28,12 @@ export class OrderService extends BaseService {
         return axios.delete(`${this.baseUrl}orders/${orderId}`, this.config(token));
     }
 
-    public updateOrderAmount(token: string, orderId: number, newAmount: number) {
-        return axios.patch(`${this.baseUrl}orders/${orderId}`, {amount: newAmount}, this.config(token));
+    public updateOrderAmount(token: string, orderId: number, amount: number) {
+        return axios.patch(`${this.baseUrl}orders/${orderId}`, {amount}, this.config(token));
+    }
+
+    public updateOrderChecked(token: string, orderId: number, checked: boolean) {
+        return axios.patch(`${this.baseUrl}orders/${orderId}`, {checked}, this.config(token));
     }
 }
 
