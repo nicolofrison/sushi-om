@@ -18,11 +18,6 @@ class App {
   }
 
   private initializePreRequestMiddlewares() {
-    const options: cors.CorsOptions = {
-      origin: ['http://localhost:3000'],
-      credentials: true,                                                
-      exposedHeaders: "Set-Cookie", 
-    };
     this.app.use(cors());
     this.app.use(express.json());
     this.app.use(cookieParser());
