@@ -1,5 +1,5 @@
 export default class BaseService {
-    protected readonly baseUrl = "http://192.168.1.74:5000/";
+    protected readonly baseUrl = `${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_PORT}/`;
 
     protected config(token: string) {
         return {
