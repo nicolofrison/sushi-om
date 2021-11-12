@@ -9,7 +9,7 @@ import OrderPost from "../interfaces/orderPost.interface";
 import authMiddleware from "../middlewares/auth.middleware";
 import RequestWithUser from "../interfaces/requestWithUser.interface";
 import OrderAmountPatch from "../interfaces/OrderAmountPatch.interface";
-import OrderCheckPatch from "../interfaces/orderCheckPatch.interface";
+import OrderCheckPatch from "../interfaces/OrderCheckPatch.interface";
 import OrderAlreadyConfirmedException from "../exceptions/OrderAlreadyConfirmedException";
 import OrderDoesNotExistsException from "../exceptions/OrderDoesNotExistsException";
 import GroupDoesNotExistsException from "../exceptions/GroupDoesNotExistsException";
