@@ -78,7 +78,6 @@ export default function SignUp() {
         <Avatar>
           <LockOutlinedIcon />
         </Avatar>
-        {JSON.stringify({firstName, lastName, username})}
         {step === SignUpStep.user ?
           <SignUpUser SetFirstName={setFirstName} SetLastName={setLastName} SetUsername={setUsername} SetStep={setStep} />
         :
