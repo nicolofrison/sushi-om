@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "initDB": "./wait-for-it.sh ${PGHOST}:${PGPORT} --strict -- npm run typeorm schema:sync",
+    "start": "./wait-for-it.sh ${PGHOST}:${PGPORT} --strict -- npm run dev",
     "dev": "ts-node ./src/server.ts",
     "test": "jest",
     "typeorm": "ts-node ./node_modules/typeorm/cli -f ./src/ormconfig.ts",
