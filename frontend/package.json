@@ -16,6 +16,7 @@
     "@types/react": "^17.0.13",
     "@types/react-dom": "^17.0.8",
     "axios": "^0.23.0",
+    "envalid": "^7.2.2",
     "i18next": "^20.3.2",
     "i18next-browser-languagedetector": "^6.1.2",
     "i18next-http-backend": "^1.2.6",
