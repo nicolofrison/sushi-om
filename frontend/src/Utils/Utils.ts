@@ -14,7 +14,7 @@ export function handleError(error: Error | AxiosError) {
         console.error(error);
 
         const errorResponse = (error.response as any);
-        const errorMessage = errorResponse.data?.translationKey ?? errorResponse.data?.message ?? error.message;
+        const errorMessage = errorResponse?.data?.translationKey ?? errorResponse?.data?.message ?? error.message;
         AlertService.showAlert(errorMessage, AlertType.error);
 
         if (UserUtils.IsLoggedIn() 
