@@ -64,7 +64,7 @@ class UserOrdersList extends OrdersList<IOrdersListProps, IGroupOrdersListState>
     .then(res => {
       this.setState({orders: (res.data as any[]).filter(o => o.round), isLoading: false});
 
-      console.log(res.data);
+      console.debug(res.data);
     })
     .catch((error: Error | AxiosError) => {
       handleError(error);

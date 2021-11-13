@@ -44,7 +44,7 @@ class EditOrder extends React.Component<IProps, IState> {
 
         const orderId = this.props.orderId;
         const newAmount = this.state.amount;
-        console.log("newAmount", this.state.amount);
+        console.debug("newAmount", this.state.amount);
 
         const token = UserUtils.getToken();
         if (token == null) {
@@ -101,12 +101,12 @@ class EditOrder extends React.Component<IProps, IState> {
                 label={t(translations.amount)}
                 autoFocus
                 onBlur={(e) => {
-                    console.log("blur");
+                    console.debug("blur");
                     this.updateOrder();
                 }}
                 onKeyDown={e => {
                     if (e.key === "Enter") {
-                        console.log("enter");
+                        console.debug("enter");
                         (e.target as HTMLInputElement).blur();
                     }
                 }}

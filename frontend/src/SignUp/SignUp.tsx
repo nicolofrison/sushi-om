@@ -52,7 +52,7 @@ export default function SignUp() {
     UserUtils.removeUser();
     UserService.signUp(authPost)
       .then(res => {
-        console.log(res.data);
+        console.debug(res.data);
 
         UserUtils.setUser(res.data as User);
         window.location.reload();

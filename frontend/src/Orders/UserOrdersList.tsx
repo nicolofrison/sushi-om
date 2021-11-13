@@ -93,7 +93,7 @@ class UserOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrdersL
 
       OrderService.deleteOrder(accessToken, orderId)
       .then(res => {
-        console.log(res.data);
+        console.debug(res.data);
         alertService.showAlert(translations.orderRemovedSuccessfully, AlertType.success);
 
         this.updateOrders();
@@ -143,7 +143,7 @@ class UserOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrdersL
         this.setState({isLoading: true});
         OrderService.updateOrderChecked(accessToken, orderId, value as boolean)
         .then(res => {
-          console.log(res.data);
+          console.debug(res.data);
           alertService.showAlert(translations.orderCheckedSuccessfully, AlertType.success);
   
           this.updateOrders();
