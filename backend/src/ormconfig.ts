@@ -7,7 +7,7 @@ const config: ConnectionOptions = {
   username: process.env.PGUSER,
   password: process.env.PGPASSWORD,
   database: process.env.PGDATABASE,
-  entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
+  entities: [`${__dirname}/**/*.entity{.ts,.js}`],
   cli: {
     migrationsDir: "src/migrations",
   },

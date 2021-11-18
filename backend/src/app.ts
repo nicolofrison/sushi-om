@@ -1,6 +1,4 @@
 /* eslint no-console: ["error", { allow: ["info", "error"] }] */
-import * as bodyParser from "body-parser";
-import * as cookieParser from "cookie-parser";
 import * as express from "express";
 import * as cors from 'cors';
 import Controller from "./interfaces/controller.interface";
@@ -20,7 +18,6 @@ class App {
   private initializePreRequestMiddlewares() {
     this.app.use(cors());
     this.app.use(express.json());
-    this.app.use(cookieParser());
   }
 
   private initializeControllers(controllers) {

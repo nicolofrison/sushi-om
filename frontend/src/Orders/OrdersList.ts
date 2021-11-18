@@ -29,7 +29,7 @@ export class OrdersList<P extends IOrdersListProps, S extends IOrdersListState> 
     .then(res => {
       this.setState({orders: res.data as any[], isLoading: false});
 
-      console.log(res.data);
+      console.debug(res.data);
     })
     .catch((error: Error | AxiosError) => {
       handleError(error);

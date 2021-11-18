@@ -6,8 +6,9 @@
     "baseUrl": "./src",
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "module": "CommonJS"
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "./*.js"]
+  "exclude": ["node_modules", "./*.js", "src/**/*.test.ts"]
 }

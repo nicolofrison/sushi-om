@@ -1,2 +1,3 @@
 sushi-om.session.sql
 .vscode/*
+*.env
