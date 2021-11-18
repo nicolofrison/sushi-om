@@ -5,12 +5,19 @@ To build the app through docker compose you need to execute "npm install" and th
 
 SITE_URL: the url in which you are exposing the frontend and the backend
 
+
 FRONTEND_PORT: the frontend port
 
+
 BACKEND_PORT: the backend port
+
 JWT_SECRET: the backend jwt secret
+
 JWT_EXPIRATION: the jwt expiration
 
+
 PGUSER: the postgres user used by the backend
+
 PGPASSWORD: the postgres user's password used by the backend
+
 PGDATABASE: the postgres database used by the backend
