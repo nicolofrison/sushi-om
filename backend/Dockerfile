@@ -18,4 +18,4 @@ RUN chmod +x wait-for-it.sh
 
 RUN npx tsc
 
-CMD [ "node", "./dist/server.js" ]
+CMD [ "npm", "run", "dockerStart" ]
