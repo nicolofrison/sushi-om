@@ -6,6 +6,7 @@ import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import CircularProgress from '@mui/material/CircularProgress';
+import { IconButton } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,6 +15,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Toolbar from '@mui/material/Toolbar';
+
+import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 
 import translations from '../Utils/TranslationKeys';
 import OrderService from '../services/order.service';
@@ -175,7 +178,9 @@ class UserOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrdersL
         </TableCell>
         <TableCell align="center">
           {notConfirmedUsersOrders
-            && <Button size="large" variant="contained" color="error" onClick={() => this.deleteOrder(row.orderId)}>{t(translations.remove)}</Button>
+            && <IconButton aria-label={t(translations.remove)} size="large" onClick={() => this.deleteOrder(row.orderId)}>
+            <IndeterminateCheckBoxIcon fontSize="inherit" color="error" />
+          </IconButton>
           }
         </TableCell>
       </TableRow>;
@@ -196,14 +201,14 @@ class UserOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrdersL
         
       return (
         <TableContainer component={Paper}>
-          <Table aria-label="simple table">
+          <Table aria-label="simple table" size="small">
             <TableHead>
               <TableRow>
-                <TableCell align="center" width="10%">{ToFirstCapitalLetter(t(translations.checked))}</TableCell>
-                <TableCell align="center" width="10%">{ToFirstCapitalLetter(t(translations.round))}</TableCell>
-                <TableCell align="center" width="10%">{ToFirstCapitalLetter(t(translations.code))}</TableCell>
-                <TableCell align="center">{ToFirstCapitalLetter(t(translations.amount))}</TableCell>
-                <TableCell align="center">{ToFirstCapitalLetter(t(translations.actions))/*Users*/}</TableCell>
+                <TableCell align="center" width="10%" sx={{ paddingX: "8px" }}>{ToFirstCapitalLetter(t(translations.checked))}</TableCell>
+                <TableCell align="center" width="10%" sx={{ paddingX: "8px" }}>{ToFirstCapitalLetter(t(translations.round))}</TableCell>
+                <TableCell align="center" width="10%" sx={{ paddingX: "8px" }}>{ToFirstCapitalLetter(t(translations.code))}</TableCell>
+                <TableCell align="center" sx={{ paddingX: "8px" }}>{ToFirstCapitalLetter(t(translations.amount))}</TableCell>
+                <TableCell align="center" sx={{ paddingX: "8px" }}>{ToFirstCapitalLetter(t(translations.actions))/*Users*/}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

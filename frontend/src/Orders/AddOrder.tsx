@@ -2,9 +2,11 @@ import React from 'react';
 
 import {WithTranslation, withTranslation} from "react-i18next";
 
+import IconButton from '@mui/material/IconButton';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import Button from '@mui/material/Button';
+
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 import translations from '../Utils/TranslationKeys';
 import OrderService from '../services/order.service';
@@ -110,7 +112,9 @@ class AddOrder extends React.Component<IProps, IState> {
                             />
                 </TableCell>
                 <TableCell align="center">
-                    <Button size="large" disabled={this.props.ordersConfirmed} variant="contained" color="primary" onClick={this.addOrder.bind(this)}>{t(translations.add)}</Button>
+                  <IconButton disabled={this.props.ordersConfirmed} aria-label={t(translations.add)} size="large" onClick={this.addOrder.bind(this)}>
+                    <AddBoxIcon fontSize="inherit" color="success" />
+                  </IconButton>
                 </TableCell>
                 </TableRow>
             );
