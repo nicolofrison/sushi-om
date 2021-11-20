@@ -41,7 +41,8 @@ const translations = {
     userDoesNotExists: "userDoesNotExists",
     internalServerError: "internalServerError",
     orderIsNotConfirmed: "orderIsNotConfirmed",
-    orderCheckedSuccessfully: "orderCheckedSuccessfully"
+    orderCheckedSuccessfully: "orderCheckedSuccessfully",
+    language: "language"
 };
 
 export default translations;

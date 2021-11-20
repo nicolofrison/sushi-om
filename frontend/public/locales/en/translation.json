@@ -41,5 +41,6 @@
     "userDoesNotExists": "The user does not exists",
     "internalServerError": "Internal server error",
     "orderIsNotConfirmed": "The order is not confirmed",
-    "orderCheckedSuccessfully": "Updated order check successfully"
+    "orderCheckedSuccessfully": "Updated order check successfully",
+    "language": "language"
 }
