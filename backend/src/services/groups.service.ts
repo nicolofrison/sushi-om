@@ -20,7 +20,7 @@ class GroupsService {
   ) => {
     await this.groupRepo.query(`
       DELETE FROM "group"
-      WHERE "createdAt"::timestamp + '$1 seconds'::interval > NOW();
+      WHERE "createdAt"::timestamp + CONCAT($1::VARCHAR, ' seconds')::interval < NOW();
     `, [expirationTimeInSeconds]);
   };
 }
