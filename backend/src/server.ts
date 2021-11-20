@@ -10,11 +10,20 @@ import AuthenticationController from "./controllers/authentication.controller";
 import OrdersController from "./controllers/orders.controller";
 import UsersController from "./controllers/users.controller";
 
+import GroupsService from "./services/groups.service";
+
 validateEnv();
 
 (async () => {
   try {
     await createConnection(config);
+    
+    setInterval(async () => {
+      const expirationTimeInSeconds = +process.env.JWT_EXPIRATION;
+      const groupService = new GroupsService();
+      groupService.deleteExpiredGroups(expirationTimeInSeconds);
+    }, +(process.env.DELETE_GROUPS_INTERVAL));
+
   } catch (error) {
     console.error("Error while connecting to the database", error);
     return error;

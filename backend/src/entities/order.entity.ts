@@ -6,7 +6,7 @@ export default class Order {
   @PrimaryGeneratedColumn({ type: "int" })
   orderId?: number;
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, { onDelete: 'CASCADE' })
   @JoinColumn({ name: "userId" })
   user: User;
 

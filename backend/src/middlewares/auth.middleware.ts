@@ -32,7 +32,7 @@ async function authMiddleware(
       } else {
         next(
           new AuthenticationHttpError(
-            AuthenticationHttpErrorType.WrongAuthenticationToken
+            AuthenticationHttpErrorType.ExpiredAuthenticationToken
           )
         );
       }

@@ -15,6 +15,8 @@ JWT_SECRET: the backend jwt secret
 
 JWT_EXPIRATION: the jwt expiration
 
+DELETE_GROUPS_INTERVAL: How often try to delete the expired groups
+
 
 PGUSER: the postgres user used by the backend
 

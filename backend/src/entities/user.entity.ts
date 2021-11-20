@@ -26,7 +26,7 @@ export default class User {
   })
   public username: string;
 
-  @ManyToOne(type => Group)
+  @ManyToOne(type => Group, { onDelete: 'CASCADE' })
   @JoinColumn({ name: "groupId" })
   group: Group;
 

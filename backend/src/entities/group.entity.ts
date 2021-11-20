@@ -17,13 +17,13 @@ export default class Group {
     type: "timestamp",
     default: () => "CURRENT_TIMESTAMP",
   })
-  createdAt?: Timestamp;
+  createdAt: Timestamp;
 
   @Column({
     type: "timestamp",
     default: () => "CURRENT_TIMESTAMP",
   })
-  updatedAt?: Timestamp;
+  updatedAt: Timestamp;
 
   constructor(name: string, password: string) {
     this.name = name;
