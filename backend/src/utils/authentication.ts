@@ -9,7 +9,8 @@ export default class AuthenticationUtils {
       user
     };
     const secret = process.env.JWT_SECRET;
-    const expiresIn = process.env.JWT_EXPIRATION; // an hour
+    const expiresIn = +(process.env.JWT_EXPIRATION); // in seconds
+    
     return jwt.sign(dataStoredInToken, secret, { expiresIn });
   }
 
