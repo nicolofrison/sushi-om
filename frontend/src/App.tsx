@@ -13,7 +13,7 @@ function App() {
     <Suspense fallback="loading">
       <TopAlert />
       <div className="App">
-        <Grid container alignItems="flex-start" rowSpacing={1} sx={{ margin: "5px" }}>
+        <Grid container alignItems="flex-start" rowSpacing={1} sx={{ margin: "5px", maxWidth: "calc(100% - 10px)" }}>
           <Grid item xs={12} container justifyContent="flex-end">
             <TranslationSelection />
           </Grid>
