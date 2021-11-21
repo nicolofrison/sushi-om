@@ -62,6 +62,7 @@ class CartOrdersList extends React.Component<IGenericOrdersListProps, IGenericOr
         console.debug(res.data);
 
         this.props.updateOrders();
+        this.setState({confirmed});
       })
       .catch(handleError);
   }
