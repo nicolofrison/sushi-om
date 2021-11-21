@@ -5,12 +5,12 @@ import { AddCircle, RemoveCircle } from '@mui/icons-material';
 
 import { withTranslation, WithTranslation } from 'react-i18next';
 
-import translations from '../Utils/TranslationKeys';
-import OrderService from '../services/order.service';
-import UserUtils from '../Utils/UserUtils';
-import { handleError } from '../Utils/Utils';
-import alertService from '../services/alert.service';
-import { AlertType } from '../Utils/Enums';
+import translations from '../../Utils/TranslationKeys';
+import OrderService from '../../services/order.service';
+import UserUtils from '../../Utils/UserUtils';
+import { handleError } from '../../Utils/Utils';
+import alertService from '../../services/alert.service';
+import { AlertType } from '../../Utils/Enums';
 
 interface IProps extends WithTranslation {
     amount: number,
