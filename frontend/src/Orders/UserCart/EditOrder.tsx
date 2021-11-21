@@ -85,7 +85,7 @@ class EditOrder extends React.Component<IProps, IState> {
     render() {
         const { t } = this.props;
 
-        return <Grid container spacing={2}>
+        return <Grid container wrap="nowrap" alignContent="center" alignItems="center">
         <Grid xs-item={2}>
         <IconButton xs-item={2} aria-label={t(translations.subtract)} onClick={this.updateAmount.bind(this, -1)}>
           <RemoveCircle color="primary" />
@@ -99,7 +99,6 @@ class EditOrder extends React.Component<IProps, IState> {
                 id={"amount"+this.props.orderId}
                 inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', style: { textAlign: 'center' } }}
                 label={t(translations.amount)}
-                autoFocus
                 onBlur={(e) => {
                     console.debug("blur");
                     this.updateOrder();

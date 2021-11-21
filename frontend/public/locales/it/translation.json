@@ -42,6 +42,7 @@
     "internalServerError": "Errore interno del server",
     "orderIsNotConfirmed": "L'ordine non e` confermato",
     "orderCheckedSuccessfully": "L'ordine e` stato spuntato con successo",
+    "language": "lingua",
     "ordersToShow": "ordini da mostrare",
     "cart": "carrello"
 }

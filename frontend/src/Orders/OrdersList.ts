@@ -27,9 +27,15 @@ export class OrdersList<P extends IOrdersListProps, S extends IOrdersListState> 
     this.setState({isLoading: true});
     OrderService.getOrders(user.accessToken, groupId, userId)
     .then(res => {
-      this.setState({orders: res.data as any[], isLoading: false});
-
-      console.debug(res.data);
+      const orders = res.data as any[];
+      const sortedOrders = orders
+        .sort((a: any, b:any) => {
+          const roundOrderValue = a.round - b.round;
+          return roundOrderValue !== 0 ? roundOrderValue : a.code - b.code;
+        });
+      console.log(sortedOrders);
+      
+      this.setState({orders: orders, isLoading: false});
     })
     .catch((error: Error | AxiosError) => {
       handleError(error);

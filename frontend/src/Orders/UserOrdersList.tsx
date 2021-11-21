@@ -1,7 +1,5 @@
 import { withTranslation } from "react-i18next";
 
-import Paper from '@mui/material/Paper';
-
 import UserService from '../services/user.service';
 
 import UserUtils from '../Utils/UserUtils';
@@ -91,9 +89,9 @@ class UserOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrdersL
     const { t } = this.props;
 
     return (
-      <Paper square>
+      <div>
         <FormControl variant="filled" fullWidth>
-            <InputLabel id="ordersToShowSelectLabel">{ToFirstCapitalLetter(t(translations.ordersToShow))}</InputLabel>
+          <InputLabel id="ordersToShowSelectLabel">{ToFirstCapitalLetter(t(translations.ordersToShow))}</InputLabel>
           <Select
             id="ordersToShowSelect"
             labelId="ordersToShowSelectLabel"
@@ -110,11 +108,11 @@ class UserOrdersList extends OrdersList<IGenericOrdersListProps, IGenericOrdersL
               .map(r => <MenuItem key={r} value={r}>{ToFirstCapitalLetter(t(translations.round)) + " " + r}</MenuItem>)}
           </Select>
         </FormControl>
-        {this.state.round === RoundType.cart && 
+        {this.state.round === RoundType.cart &&
           <CartOrdersList isLoading={this.state.isLoading} orders={this.state.orders.filter(o => !o.round)} setIsLoading={this.setIsLoading.bind(this)} updateOrders={this.updateOrders.bind(this)} />}
         {this.state.round !== RoundType.cart &&
           <UserConfirmedOrdersList isLoading={this.state.isLoading} orders={this.state.orders.filter(o => o.round && (this.state.round === RoundType.allConfirmed || o.round === this.state.round))} setIsLoading={this.setIsLoading.bind(this)} updateOrders={this.updateOrders.bind(this)} />}
-      </Paper>
+      </div>
     );
   }
 }

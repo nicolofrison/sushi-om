@@ -2,9 +2,11 @@ import React from 'react';
 
 import {WithTranslation, withTranslation} from "react-i18next";
 
+import IconButton from '@mui/material/IconButton';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import Button from '@mui/material/Button';
+
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 import translations from '../../Utils/TranslationKeys';
 import OrderService from '../../services/order.service';
@@ -22,7 +24,7 @@ interface IProps extends WithTranslation {
 
 interface IState {
     code: string,
-    amount: number
+    amount: number | ""
 }
       
 class AddOrder extends React.Component<IProps, IState> {
@@ -31,7 +33,7 @@ class AddOrder extends React.Component<IProps, IState> {
           super(props);
           this.state = {
             code: "",
-            amount: 0
+            amount: ""
           };
         }
       
@@ -48,6 +50,10 @@ class AddOrder extends React.Component<IProps, IState> {
           }
       
           addOrder() {
+            if (this.state.code === "" || this.state.amount === "" || this.state.amount < 1) {
+              return;
+            }
+
             const orderPost: OrderPost = {
               code: this.state.code,
               amount: +this.state.amount
@@ -85,7 +91,6 @@ class AddOrder extends React.Component<IProps, IState> {
                         disabled={this.props.ordersConfirmed}
                         id="code"
                         label={t(translations.code)}
-                        autoFocus
                         fullWidth
                         onChange={this.handleInputChange.bind(this)}
                         value={this.state.code}
@@ -102,13 +107,14 @@ class AddOrder extends React.Component<IProps, IState> {
                             id="amount"
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                             label={t(translations.amount)}
-                            autoFocus
                             onChange={this.handleInputChange.bind(this)}
                             value={this.state.amount}
                             />
                 </TableCell>
                 <TableCell align="center">
-                    <Button size="large" disabled={this.props.ordersConfirmed} variant="contained" color="primary" onClick={this.addOrder.bind(this)}>{t(translations.add)}</Button>
+                  <IconButton disabled={this.props.ordersConfirmed} aria-label={t(translations.add)} size="large" onClick={this.addOrder.bind(this)}>
+                    <AddBoxIcon fontSize="inherit" color="success" />
+                  </IconButton>
                 </TableCell>
                 </TableRow>
             );

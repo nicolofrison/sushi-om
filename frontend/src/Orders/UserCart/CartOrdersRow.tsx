@@ -1,5 +1,7 @@
-import { Button, TableCell, TableRow } from "@mui/material";
+import { IconButton, TableCell, TableRow } from "@mui/material";
 import { useTranslation } from "react-i18next";
+
+import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 
 import alertService from "../../services/alert.service";
 import OrderService from "../../services/order.service";
@@ -52,7 +54,9 @@ export default function CartOrdersRow(props: IProps) {
         </TableCell>
         <TableCell align="center">
             {notConfirmedUsersOrders
-                && <Button size="large" variant="contained" color="error" onClick={() => deleteOrder()}>{t(translations.remove)}</Button>
+                && <IconButton aria-label={t(translations.remove)} size="large" onClick={() => deleteOrder()}>
+                <IndeterminateCheckBoxIcon fontSize="inherit" color="error" />
+              </IconButton>
             }
         </TableCell>
     </TableRow>;

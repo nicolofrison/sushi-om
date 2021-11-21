@@ -3,19 +3,21 @@ import React from 'react';
 import {useTranslation} from "react-i18next";
 
 import { InputLabel, Select, MenuItem, FormControl } from '@mui/material';
+import translations from './TranslationKeys';
+import { ToFirstCapitalLetter } from './Utils';
 
 export default function TranslationSelection()
 {
-    const { i18n } = useTranslation('common');
+    const { i18n, t } = useTranslation();
     
     const availableLanguages = [
         {
             key: 'en',
-            value: 'english'
+            value: 'English'
         },
         {
             key: 'it',
-            value: 'italian'
+            value: 'Italiano'
         },
     ];
     
@@ -23,10 +25,10 @@ export default function TranslationSelection()
 
     return <div>
         <FormControl variant="filled">
-            <InputLabel id="demo-simple-select-filled-label">Age</InputLabel>
+            <InputLabel id="translationsSelectLabel">{ToFirstCapitalLetter(t(translations.language))}</InputLabel>
             <Select
-                labelId="demo-simple-select-filled-label"
-                id="demo-simple-select-filled"
+                labelId="translationsSelectLabel"
+                id="translationsSelect"
                 value={language}
                 onChange={(event) => {
                     const newLanguage = event.target.value as string;

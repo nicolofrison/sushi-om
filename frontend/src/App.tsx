@@ -6,16 +6,21 @@ import SignUp from './SignUp/SignUp';
 import TranslationSelection from './Utils/TranslationSelection';
 import UserUtils from './Utils/UserUtils';
 import TopAlert from './Utils/TopAlert';
+import { Grid } from '@mui/material';
 
 function App() {
   return (
     <Suspense fallback="loading">
       <TopAlert />
       <div className="App">
-        <header className="App-header">
-          <TranslationSelection />
-          <Content />
-        </header>
+        <Grid container alignItems="flex-start" rowSpacing={1} sx={{ margin: "5px", maxWidth: "calc(100% - 10px)" }}>
+          <Grid item xs={12} container justifyContent="flex-end">
+            <TranslationSelection />
+          </Grid>
+          <Grid item xs={12}>
+            <Content />
+          </Grid>
+        </Grid>
       </div>
     </Suspense>
   );
