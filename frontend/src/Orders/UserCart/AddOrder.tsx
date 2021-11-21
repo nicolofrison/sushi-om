@@ -24,7 +24,7 @@ interface IProps extends WithTranslation {
 
 interface IState {
     code: string,
-    amount: number
+    amount: number | ""
 }
       
 class AddOrder extends React.Component<IProps, IState> {
@@ -33,7 +33,7 @@ class AddOrder extends React.Component<IProps, IState> {
           super(props);
           this.state = {
             code: "",
-            amount: 0
+            amount: ""
           };
         }
       
@@ -50,6 +50,10 @@ class AddOrder extends React.Component<IProps, IState> {
           }
       
           addOrder() {
+            if (this.state.code === "" || this.state.amount === "" || this.state.amount < 1) {
+              return;
+            }
+
             const orderPost: OrderPost = {
               code: this.state.code,
               amount: +this.state.amount
@@ -87,7 +91,6 @@ class AddOrder extends React.Component<IProps, IState> {
                         disabled={this.props.ordersConfirmed}
                         id="code"
                         label={t(translations.code)}
-                        autoFocus
                         fullWidth
                         onChange={this.handleInputChange.bind(this)}
                         value={this.state.code}
@@ -104,7 +107,6 @@ class AddOrder extends React.Component<IProps, IState> {
                             id="amount"
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                             label={t(translations.amount)}
-                            autoFocus
                             onChange={this.handleInputChange.bind(this)}
                             value={this.state.amount}
                             />
