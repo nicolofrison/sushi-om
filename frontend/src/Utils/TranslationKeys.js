@@ -42,7 +42,9 @@ const translations = {
     internalServerError: "internalServerError",
     orderIsNotConfirmed: "orderIsNotConfirmed",
     orderCheckedSuccessfully: "orderCheckedSuccessfully",
-    language: "language"
+    language: "language",
+    ordersToShow: "ordersToShow",
+    cart: "cart"
 };
 
 export default translations;

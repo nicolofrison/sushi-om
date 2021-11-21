@@ -8,14 +8,14 @@ import TableRow from '@mui/material/TableRow';
 
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
-import translations from '../Utils/TranslationKeys';
-import OrderService from '../services/order.service';
+import translations from '../../Utils/TranslationKeys';
+import OrderService from '../../services/order.service';
 import { TextField } from '@mui/material';
-import OrderPost from '../Interfaces/OrderPost.interface';
-import UserUtils from '../Utils/UserUtils';
-import { handleError } from '../Utils/Utils';
-import alertService from '../services/alert.service';
-import { AlertType } from '../Utils/Enums';
+import OrderPost from '../../Interfaces/OrderPost.interface';
+import UserUtils from '../../Utils/UserUtils';
+import { handleError } from '../../Utils/Utils';
+import alertService from '../../services/alert.service';
+import { AlertType } from '../../Utils/Enums';
 
 interface IProps extends WithTranslation {
     updateOrders: () => void,
@@ -78,8 +78,6 @@ class AddOrder extends React.Component<IProps, IState> {
             const { t } = this.props;
             return (
                 <TableRow key="add">
-                <TableCell />
-                <TableCell />
                 <TableCell align="center">
                     <TextField
                         autoComplete="code"
