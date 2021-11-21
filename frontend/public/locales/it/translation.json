@@ -30,6 +30,7 @@
     "orderEditedSuccessfully": "Ordine modificato con successo",
     "orderRemovedSuccessfully": "Ordine rimosso con successo",
     "confirm": "conferma",
+    "undoConfirm": "annulla conferma",
     "checked": "spuntato",
     "ordersEmpty": "Non ci sono ancora ordini presenti",
     "groupAlreadyExists": "Il gruppo esiste gia`",

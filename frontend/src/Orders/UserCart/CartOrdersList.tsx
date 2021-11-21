@@ -99,7 +99,10 @@ class CartOrdersList extends React.Component<IGenericOrdersListProps, IGenericOr
             </TableBody>
           </Table>
         </TableContainer>
-        <Button fullWidth variant="contained" color="primary" onClick={() => this.updateUserConfirmation()}>{ToFirstCapitalLetter(t(translations.confirm))}</Button>
+        {this.state.confirmed
+          ? <Button fullWidth variant="contained" color="error" onClick={() => this.updateUserConfirmation()}>{ToFirstCapitalLetter(t(translations.undoConfirm))}</Button>
+          : <Button fullWidth variant="contained" color="success" onClick={() => this.updateUserConfirmation()}>{ToFirstCapitalLetter(t(translations.confirm))}</Button>
+        }
       </Paper>
     );
   }

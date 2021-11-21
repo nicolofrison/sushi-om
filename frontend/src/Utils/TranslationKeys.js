@@ -30,6 +30,7 @@ const translations = {
     orderEditedSuccessfully: "orderEditedSuccessfully",
     orderRemovedSuccessfully: "orderRemovedSuccessfully",
     confirm: "confirm",
+    undoConfirm: "undoConfirm",
     checked: "checked",
     ordersEmpty: "ordersEmpty",
     groupAlreadyExists: "groupAlreadyExists",
